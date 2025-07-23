@@ -1,0 +1,377 @@
+/* Container for the form */
+.update-form-container {
+    max-width: 600px; /* Limits the form width */
+    margin: 0 auto; /* Centers the form */
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background color */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Heading Style */
+.update-form-container h2 {
+    text-align: center; /* Centers the heading */
+    color: #3498db; /* Blue color */
+    font-size: 28px; /* Size of the heading */
+    font-weight: bold;
+    margin-bottom: 20px; /* Adds space below the heading */
+}
+
+/* Form Labels */
+#updateBySidForm label {
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    margin: 10px 0 5px;
+}
+
+/* Input Fields */
+#updateBySidForm input {
+    width: 100%; /* Full width for input fields */
+    padding: 10px;
+    margin-bottom: 15px; /* Space between inputs */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px;
+}
+
+/* Button Style */
+#updateBySidForm button {
+    width: 100%; /* Full width for the button */
+    padding: 12px;
+    background-color: #3498db; /* Blue background */
+    color: white; /* White text */
+    font-size: 18px;
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Button Hover Effect */
+#updateBySidForm button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Error Handling (Optional) */
+#updateBySidForm input:invalid {
+    border-color: #e74c3c; /* Red border for invalid inputs */
+}
+
+#updateBySidForm input:valid {
+    border-color: #2ecc71; /* Green border for valid inputs */
+}
+
+
+/* Container for the form */
+.update-form-container {
+    max-width: 600px; /* Limits the form width */
+    margin: 0 auto; /* Centers the form */
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background color */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Heading Style */
+.update-form-container h2 {
+    text-align: center; /* Centers the heading */
+    color: #3498db; /* Blue color */
+    font-size: 28px; /* Size of the heading */
+    font-weight: bold;
+    margin-bottom: 20px; /* Adds space below the heading */
+}
+
+/* Form Labels */
+#updateByFirstNameForm label {
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    margin: 10px 0 5px;
+}
+
+/* Input Fields */
+#updateByFirstNameForm input {
+    width: 100%; /* Full width for input fields */
+    padding: 10px;
+    margin-bottom: 15px; /* Space between inputs */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px;
+}
+
+/* Button Style */
+#updateByFirstNameForm button {
+    width: 100%; /* Full width for the button */
+    padding: 12px;
+    background-color: #3498db; /* Blue background */
+    color: white; /* White text */
+    font-size: 18px;
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Button Hover Effect */
+#updateByFirstNameForm button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Error Handling (Optional) */
+#updateByFirstNameForm input:invalid {
+    border-color: #e74c3c; /* Red border for invalid inputs */
+}
+
+#updateByFirstNameForm input:valid {
+    border-color: #2ecc71; /* Green border for valid inputs */
+}
+
+
+/* Navbar Styles */
+.navbar {
+    background-color: #f8f9fa; /* Light background color */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center; /* Align logo and text vertically */
+    font-weight: bold;
+    color: #000; /* Black text color */
+}
+
+.navbar-brand img {
+    margin-right: 10px; /* Space between logo and text */
+}
+
+.navbar-toggler {
+    border: none; /* Remove border for a clean look */
+}
+
+.navbar-toggler-icon {
+    background-color: #000; /* Black toggler icon */
+}
+
+.nav-link {
+    color: #000; /* Black text color */
+    font-size: 16px; /* Adjust font size */
+    transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.nav-link:hover {
+    color: #007bff; /* Blue on hover */
+}
+
+.nav-link.active {
+    font-weight: bold;
+    color: #007bff; /* Active link color */
+}
+
+.dropdown-menu {
+    background-color: #fff; /* White dropdown background */
+    border: 1px solid #ddd; /* Subtle border */
+    border-radius: 4px; /* Rounded corners */
+}
+
+.dropdown-item {
+    color: #000; /* Black text color */
+    transition: background-color 0.3s ease; /* Smooth background transition */
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa; /* Light background on hover */
+}
+
+.form-control {
+    border: 1px solid #ddd; /* Subtle border */
+    border-radius: 4px; /* Rounded corners */
+}
+
+.btn-outline-primary {
+    color: #007bff; /* Blue text */
+    border-color: #007bff; /* Blue border */
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff; /* Blue background */
+    color: #fff; /* White text */
+}
+
+
+/* Sidebar Styles */
+#sidebar {
+    height: 100%;
+    width: 0; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #111; /* Dark background */
+    overflow-x: hidden;
+    transition: 0.3s; /* Smooth open/close transition */
+    color: white;
+    z-index: 9999; /* Ensure sidebar is above other elements */
+    padding-top: 60px; /* Add padding for content */
+}
+
+/* Sidebar links */
+#sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white; /* White text */
+    display: block;
+    transition: 0.3s; /* Smooth hover transition */
+}
+
+#sidebar a:hover {
+    background-color: #575757; /* Gray hover background */
+    color: white; /* Ensure text remains white */
+}
+
+/* Close button */
+#sidebar .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    color: white; /* White close button */
+    cursor: pointer;
+}
+
+/* Sidebar text */
+.sidebar-text {
+    font-size: 22px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Calendar container */
+.calendar-container {
+    margin-top: 30px;
+    padding: 10px;
+    background-color: #222; /* Darker background */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.calendar, .time {
+    font-size: 16px;
+    color: white; /* White text */
+}
+
+/* Main content adjustment for sidebar */
+.main-content {
+    margin-left: 0;
+    transition: margin-left 0.3s; /* Smooth margin transition */
+    padding: 20px;
+}
+
+
+
+.container {
+    background-color: white;
+   
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    max-width: 600px;
+    margin: 20px auto; /* Center the container with margin */
+}
+
+
+.custom-navbar {
+    background-image: url('images/suu.jpg');
+}
+
+
+/* Targeting the h1 with class 'student-update-heading' */
+.student-update-heading {
+    text-align: center;
+    text-transform: capitalize;
+    font-size: 45px; /* Adjust font size */
+    color: black; /* Blue color for the heading */
+    padding-bottom: 30px;
+}
+
+
+/* Targeting the h2 with class 'update-by-sid-heading' */
+.update-by-sid-heading {
+    padding-top: 30px;
+    padding-left: 30px;
+    color: white; /* Blue color for the h2 heading */
+    font-size: 30px; /* Adjust font size */
+}
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('images/new\ back.png')no-repeat center center fixed; /* Replace with your image URL */
+    background-size: cover;
+color: #333;
+}
+
+/* Header Section */
+.insert-header {
+    background-color: black; /* Blue background */
+    text-align: center;
+    padding: 10px 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+/* Header Text */
+.insert-header h1 {
+    color: white; /* White text for contrast */
+    font-size: 36px;
+    font-weight: bold;
+    text-transform: uppercase; /* Makes the text stand out */
+    letter-spacing: 2px; /* Adds space between letters for a modern look */
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow for depth */
+    font-family: 'Arial', sans-serif; /* Ensures modern, clean font */
+}
+
+/* Optional: Hover Effect for Extra Attention */
+.insert-header h1:hover {
+    color: #ffffff;
+    transform: scale(1.1); /* Slightly enlarges the text when hovered */
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+
+/* Smaller Header Section */
+.insert-header-smaller {
+    background-color: #3498db; /* Blue background */
+    text-align: center;
+    padding: 15px 0; /* Reduced padding for an even smaller header */
+    border-radius: 6px; /* Even smaller border radius */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+    margin-bottom: 15px; /* Reduced bottom margin */
+    max-width: 400px; /* Smaller max width */
+    margin: 20px auto; /* Adjusted margin for a smaller header */
+}
+
+/* Header Text */
+.insert-header-smaller h1 {
+    color: white; /* White text for contrast */
+    font-size: 22px; /* Smaller font size */
+    font-weight: bold;
+    text-transform: uppercase; /* Makes the text stand out */
+    letter-spacing: 1px; /* Reduced letter spacing */
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    font-family: 'Arial', sans-serif; /* Ensures modern, clean font */
+}
+
+/* Optional: Hover Effect for Extra Attention */
+.insert-header-smaller h1:hover {
+    color: #ffffff;
+    transform: scale(1.05); /* Slightly enlarges the text when hovered */
+    transition: transform 0.3s ease, color 0.3s ease;
+}

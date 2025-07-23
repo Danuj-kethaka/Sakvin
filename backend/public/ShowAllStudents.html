@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show All Students</title>
+    <link rel="stylesheet" href="showAllStudents.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  
+    <style>
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url(images/show2.jpg); /* Replace with your background image URL */
+    background-size: cover; /* Ensures the image covers the entire screen */
+    background-position: center center; /* Centers the background image */
+    background-attachment: fixed; /* Keeps the background fixed during scrolling */
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Page Title */
+.page-title {
+    text-align: center;
+    font-size: 32px;
+    color: #ffffff; /* White text for visibility over background */
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* Button Styling (Updated Class .show-btn) */
+.show-btn {
+    padding: 12px 25px;
+    background-color: #3498db; /* Lighter blue button */
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    transition: background-color 0.3s ease;
+}
+
+.show-btn:hover {
+    background-color: #2980b9; /* Slightly darker blue on hover */
+}
+
+/* Table Container */
+.table-container {
+    width: 90%;
+    margin: 0 auto;
+    overflow-x: auto;
+    background-color: rgba(255, 255, 255, 0.8); /* White with slight transparency */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+th {
+    background-color: #d6eaf8; /* Light blue background for header */
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+td {
+    background-color: #ffffff;
+    color: #495057;
+    font-size: 14px;
+}
+
+tr:nth-child(even) td {
+    background-color: #f2f8fc; /* Very light blue for even rows */
+}
+
+tr:hover td {
+    background-color: #d5e6f1; /* Light blue on hover */
+    cursor: pointer;
+}
+
+/* Responsive Design for Table */
+@media (max-width: 768px) {
+    table {
+        font-size: 12px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    .show-btn {
+        font-size: 14px;
+    }
+}
+
+
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light custom-navbar shadow-sm">
+        <div class="container">
+            <!-- Add Image to Navbar -->
+            <a class="navbar-brand fw-bold" href="#">
+                <img src="images/images.png"  alt="Sakvin Logo" style="width: 60px; height: auto; margin-right: 10px;">
+                SAKVIN EDUCATION INSTITUTE
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/frontend/index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="About.html">About Us</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="coursesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Courses
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="coursesDropdown">
+                            <li><a class="dropdown-item" href="#">Undergraduate</a></li>
+                            <li><a class="dropdown-item" href="#">Postgraduate</a></li>
+                            <li><a class="dropdown-item" href="#">Short Courses</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Account.html">Account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Contact.html">Contact</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    
+
+    <div id="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleSidebar()">&times;</a>
+        <p class="sidebar-text">Manage Students</p>
+        <a href="/frontend/index.html">🔍 Search Students</a>
+        <a href="insert.html">➕ Insert Student</a>
+        <a href="ShowAllStudents.html">📋 Show All Students</a>
+        <a href="updateStudent.html">✏ Update Student</a>
+        <a href="CountofStudents.html">📊 Count Students</a>
+        <a href="deleteStudent.html">🗑 Delete Student</a><br><br><br><br><br><br>
+        <!-- Calendar and Time Section -->
+        <div class="calendar-container">
+            <h4>Calendar</h4>
+            <div class="time" id="time"></div>
+            <div class="calendar" id="calendar"></div>
+        </div>
+    </div>
+
+    
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <button class="btn btn-primary" onclick="toggleSidebar()">☰ Open Sidebar</button>
+       
+    </div>
+
+    <script>
+        // Function to toggle the sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.querySelector('.main-content');
+            if (sidebar.style.width === '250px') {
+                sidebar.style.width = '0';
+                mainContent.style.marginLeft = '0';
+            } else {
+                sidebar.style.width = '250px';
+                mainContent.style.marginLeft = '250px';
+            }
+        }
+
+        // Function to display the current time
+        function displayTime() {
+            const timeElement = document.getElementById('time');
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            timeElement.textContent = timeString;
+        }
+
+        // Function to display a simple calendar
+        function displayCalendar() {
+            const calendarElement = document.getElementById('calendar');
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateString = now.toLocaleDateString(undefined, options);
+            calendarElement.textContent = dateString;
+        }
+
+        // Initialize time and calendar
+        setInterval(displayTime, 1000); // Update time every second
+        displayCalendar();
+    </script>
+
+     <!-- Info Box -->
+    
+
+
+    <h1 class="page-title">All Students</h1>
+    <button id="showAllStudentsButton" class="show-btn">Show All Students</button>
+    
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>SID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Nearest City</th>
+                    <th>Course</th>
+                    <th>Guardian</th>
+                </tr>
+            </thead>
+            <tbody id="studentTableBody">
+                <!-- Rows will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+    
+
+    <script>
+        document.getElementById('showAllStudentsButton').addEventListener('click', () => {
+            $.ajax({
+                url: 'http://localhost:5000/api/students/getAllStudents',
+                type: 'GET',
+                success: function(students) {
+                    // Display the students in a table
+                    const studentTable = document.getElementById('studentTableBody');
+                    studentTable.innerHTML = ''; // Clear previous data
+    
+                    students.forEach((student) => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${student.sid}</td>
+                            <td>${student.firstName}</td>
+                            <td>${student.lastName}</td>
+                            <td>${student.email}</td>
+                            <td>${student.nearestCity}</td>
+                            <td>${student.course}</td>
+                            <td>${student.guardian}</td>
+                        `;
+                        studentTable.appendChild(row);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    alert('Error fetching students');
+                    console.error(error);
+                }
+            });
+        });
+    </script>
+    
+
+
+<!--jquery -->
+<div class="flip-content">
+    <h2>Show All Students Page Benefits</h2>
+    <div class="card-container">
+        <div class="card-box">
+            <div class="card-front">Front 1</div>
+            <div class="card-back">Easy Access to Student Information</div>
+        </div>
+    </div>
+    <div class="card-container">
+        <div class="card-box">
+            <div class="card-front">Front 2</div>
+            <div class="card-back">Enhanced Communication and Collaboration</div>
+        </div>
+    </div>
+    <div class="card-container">
+        <div class="card-box">
+            <div class="card-front">Front 3</div>
+            <div class="card-back">Better Data Management</div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .flip-content {
+        text-align: center;
+        margin-top: 50px;
+        color: white;
+    }
+    .card-container {
+        perspective: 1000px;
+        display: inline-block;
+        margin: 10px;
+    }
+    .card-box {
+        width: 150px;
+        height: 150px;
+        position: relative;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        cursor: pointer;
+    }
+    .card-box .card-front, .card-box .card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+    }
+    .card-box .card-front {
+        background-color: #0e1da2;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+    }
+    .card-box .card-back {
+        background-color: #f44336;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: rotateY(180deg);
+    }
+</style>
+
+<script>
+    $(document).ready(function() {
+        $(".card-box").click(function() {
+            // Toggle the flip effect
+            $(this).toggleClass("flipped");
+            if ($(this).hasClass("flipped")) {
+                $(this).css("transform", "rotateY(180deg)");
+            } else {
+                $(this).css("transform", "rotateY(0deg)");
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>

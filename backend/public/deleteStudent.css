@@ -1,0 +1,315 @@
+/* Navbar Styles */
+.navbar {
+    background-color: #f8f9fa; /* Light background color */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center; /* Align logo and text vertically */
+    font-weight: bold;
+    color: #000; /* Black text color */
+}
+
+.navbar-brand img {
+    margin-right: 10px; /* Space between logo and text */
+}
+
+.navbar-toggler {
+    border: none; /* Remove border for a clean look */
+}
+
+.navbar-toggler-icon {
+    background-color: #000; /* Black toggler icon */
+}
+
+.nav-link {
+    color: #000; /* Black text color */
+    font-size: 16px; /* Adjust font size */
+    transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.nav-link:hover {
+    color: #007bff; /* Blue on hover */
+}
+
+.nav-link.active {
+    font-weight: bold;
+    color: #007bff; /* Active link color */
+}
+
+.dropdown-menu {
+    background-color: #fff; /* White dropdown background */
+    border: 1px solid #ddd; /* Subtle border */
+    border-radius: 4px; /* Rounded corners */
+}
+
+.dropdown-item {
+    color: #000; /* Black text color */
+    transition: background-color 0.3s ease; /* Smooth background transition */
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa; /* Light background on hover */
+}
+
+.form-control {
+    border: 1px solid #ddd; /* Subtle border */
+    border-radius: 4px; /* Rounded corners */
+}
+
+.btn-outline-primary {
+    color: #007bff; /* Blue text */
+    border-color: #007bff; /* Blue border */
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff; /* Blue background */
+    color: #fff; /* White text */
+}
+
+
+/* Sidebar Styles */
+#sidebar {
+    height: 100%;
+    width: 0; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #111; /* Dark background */
+    overflow-x: hidden;
+    transition: 0.3s; /* Smooth open/close transition */
+    color: white;
+    z-index: 9999; /* Ensure sidebar is above other elements */
+    padding-top: 60px; /* Add padding for content */
+}
+
+/* Sidebar links */
+#sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white; /* White text */
+    display: block;
+    transition: 0.3s; /* Smooth hover transition */
+}
+
+#sidebar a:hover {
+    background-color: #575757; /* Gray hover background */
+    color: white; /* Ensure text remains white */
+}
+
+/* Close button */
+#sidebar .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    color: white; /* White close button */
+    cursor: pointer;
+}
+
+/* Sidebar text */
+.sidebar-text {
+    font-size: 22px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Calendar container */
+.calendar-container {
+    margin-top: 30px;
+    padding: 10px;
+    background-color: #222; /* Darker background */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.calendar, .time {
+    font-size: 16px;
+    color: white; /* White text */
+}
+
+/* Main content adjustment for sidebar */
+.main-content {
+    margin-left: 0;
+    transition: margin-left 0.3s; /* Smooth margin transition */
+    padding: 20px;
+}
+
+
+
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto; /* Center the container with margin */
+}
+
+
+.custom-navbar {
+    background-image: url('images/suu.jpg');
+}
+
+/* Form Container */
+.form-container {
+    background-color: #f9f9f9; /* Light background for contrast */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    text-align: center; /* Center-align text */
+}
+
+/* Form Heading */
+.form-heading {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333; /* Dark text color for contrast */
+    margin-bottom: 20px;
+    text-transform: uppercase; /* Make the heading stand out */
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* Form Label */
+.form-label {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+    color: #555; /* Subtle text color */
+    margin-bottom: 8px;
+}
+
+/* Form Input */
+.form-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: all 0.3s ease; /* Smooth transition for focus */
+}
+
+.form-input:focus {
+    border-color: #007bff; /* Blue border on focus */
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Glow effect */
+}
+
+/* Delete Button */
+.btn-danger {
+    background-color: #dc3545; /* Red background */
+    color: #fff; /* White text */
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.btn-danger:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+/* Success and Error Messages */
+.message {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.message.success {
+    color: #28a745; /* Green for success */
+}
+
+.message.error {
+    color: #dc3545; /* Red for error */
+}
+
+
+.table-container {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 90%;
+    background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white */
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px); /* Soft blur effect */
+}
+
+.blur-theme-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-family: Arial, sans-serif;
+}
+
+.blur-theme-table thead {
+    background-color: rgba(135, 206, 250, 0.7); /* Soft sky blue */
+}
+
+.blur-theme-table th {
+    padding: 15px;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.blur-theme-table tbody tr:nth-child(odd) {
+    background-color: rgba(240, 248, 255, 0.7); /* Alice blue */
+}
+
+.blur-theme-table tbody tr:nth-child(even) {
+    background-color: rgba(173, 216, 230, 0.7); /* Light blue */
+}
+
+.blur-theme-table tbody tr:hover {
+    background-color: rgba(135, 206, 250, 0.9); /* Slightly darker sky blue on hover */
+}
+
+.blur-theme-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.action-btn {
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    color: white;
+}
+
+.action-btn.view {
+    background-color: rgba(60, 179, 113, 0.8); /* Medium sea green */
+}
+
+.action-btn.delete {
+    background-color: rgba(220, 20, 60, 0.8); /* Crimson */
+}
+
+.action-btn:hover {
+    opacity: 0.9;
+}
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('images/delete.avif')no-repeat center center fixed; /* Replace with your image URL */
+    background-size: cover;
+color: #333;
+}

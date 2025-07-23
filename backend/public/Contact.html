@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="Contact.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS (including Popper.js for dropdowns and tooltips) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .contact-section {
+        padding: 50px 20px;
+        background-color: #f4f4f4;
+        text-align: center;
+    }
+    .contact-section h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    .contact-section p {
+        font-size: 1.1rem;
+        color: #555;
+        margin-bottom: 40px;
+    }
+    .contact-form {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .contact-form label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #333;
+    }
+    .contact-form input, .contact-form textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+    .contact-form button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .contact-form button:hover {
+        background-color: #45a049;
+    }
+    .contact-details {
+        margin-top: 40px;
+    }
+    .contact-details p {
+        font-size: 1rem;
+        color: #555;
+    }
+    .contact-details strong {
+        color: #333;
+    }
+</style>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light custom-navbar shadow-sm">
+        <div class="container">
+            <!-- Add Image to Navbar -->
+            <a class="navbar-brand fw-bold" href="#">
+                <img src="images/images.png"  alt="Sakvin Logo" style="width: 60px; height: auto; margin-right: 10px;">
+                SAKVIN EDUCATION INSTITUTE
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/frontend/index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="About.html">About Us</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="coursesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Courses
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="coursesDropdown">
+                            <li><a class="dropdown-item" href="#">Undergraduate</a></li>
+                            <li><a class="dropdown-item" href="#">Postgraduate</a></li>
+                            <li><a class="dropdown-item" href="#">Short Courses</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Account.html">Account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Contact.html">Contact</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    
+
+    <div id="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleSidebar()">&times;</a>
+        <p class="sidebar-text">Manage Students</p>
+        <a href="/frontend/index.html">🔍 Search Students</a>
+        <a href="insert.html">➕ Insert Student</a>
+        <a href="ShowAllStudents.html">📋 Show All Students</a>
+        <a href="updateStudent.html">✏ Update Student</a>
+        <a href="Contact.html">📊 Count Students</a>
+        <a href="deleteStudent.html">🗑 Delete Student</a><br><br><br><br><br><br>
+
+        <!-- Calendar and Time Section -->
+        <div class="calendar-container">
+            <h4>Calendar</h4>
+            <div class="time" id="time"></div>
+            <div class="calendar" id="calendar"></div>
+        </div>
+    </div>
+
+    
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <button class="btn btn-primary" onclick="toggleSidebar()">☰ Open Sidebar</button>
+       
+    </div>
+
+    <script>
+        // Function to toggle the sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.querySelector('.main-content');
+            if (sidebar.style.width === '250px') {
+                sidebar.style.width = '0';
+                mainContent.style.marginLeft = '0';
+            } else {
+                sidebar.style.width = '250px';
+                mainContent.style.marginLeft = '250px';
+            }
+        }
+
+        // Function to display the current time
+        function displayTime() {
+            const timeElement = document.getElementById('time');
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            timeElement.textContent = timeString;
+        }
+
+        // Function to display a simple calendar
+        function displayCalendar() {
+            const calendarElement = document.getElementById('calendar');
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateString = now.toLocaleDateString(undefined, options);
+            calendarElement.textContent = dateString;
+        }
+
+        // Initialize time and calendar
+        setInterval(displayTime, 1000); // Update time every second
+        displayCalendar();
+    </script>
+
+<div class="contact-section">
+    <h1>Contact Us</h1>
+    <p>We'd love to hear from you! Fill out the form below or reach us through the provided contact details.</p>
+
+    <div class="contact-form">
+        <form>
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+            <label for="email">Your Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <label for="message">Your Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Write your message here" required></textarea>
+
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+
+    <div class="contact-details">
+        <p><strong>Address:</strong> 123 Learning Street, Knowledge City, Educationland</p>
+        <p><strong>Email:</strong> info@sakvin.edu</p>
+        <p><strong>Phone:</strong> +94 123 456 789</p>
+    </div>
+</div>
+
+</body>
+</html>
