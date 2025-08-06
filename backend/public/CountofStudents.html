@@ -271,35 +271,6 @@ color: #333;
 
 
 <!--jquey-->
-<div class="container">
-    <h2>Benefits of Counting Students </h2>
-    <button class="button" id="toggleButton">Show</button>
-    
-    <!-- Course Details Section -->
-    <div id="courseDetails" style="display: none;">
-       
-        <p>Counting students in a student record management system ensures accurate tracking of enrollment, helping institutions allocate resources like teachers and classrooms efficiently. It supports capacity planning, monitors trends in admissions, and aids in compliance with reporting requirements. This data improves decision-making for budgeting, staffing, and program development, ensuring smooth and effective management.</p>
-        
-       
-    </div>
-</div>
-
-<script>
-    // jQuery function to toggle the visibility of the course details
-    $(document).ready(function() {
-        // When the button is clicked, toggle the visibility of the course details
-        $("#toggleButton").click(function() {
-            $("#courseDetails").toggle(); // Toggles the visibility of the course details div
-            // Change button text based on visibility
-            if ($("#courseDetails").is(":visible")) {
-                $("#toggleButton").text("Hide Course Details");
-            } else {
-                $("#toggleButton").text("Show Course Details");
-            }
-        });
-    });
-</script>
-
 
 
 </body>
