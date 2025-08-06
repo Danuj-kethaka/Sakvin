@@ -187,12 +187,12 @@ body {
 
 /* First parallax image */
 .first {
-    background-image: url('images/modern-education-Skillstork.jpg'); /* Replace with your first image */
+    background-image: url('modern-education-Skillstork.jpg'); /* Replace with your first image */
 }
 
 /* Second parallax image */
 .second {
-    background-image: url('images/hero.jpg'); /* Replace with your second image */
+    background-image: url('hero.jpg'); /* Replace with your second image */
 }
 
 /* Content section on top of the parallax */
@@ -277,5 +277,6 @@ header {
 .custom-navbar {
     background-image: url('images/suu.jpg');
 }
+
 
 
