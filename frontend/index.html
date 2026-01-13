@@ -1,1457 +1,1743 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Student Record Management System</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        :root {
-            --primary-color: #4361ee;
-            --secondary-color: #3f37c9;
-            --accent-color: #4895ef;
-            --danger-color: #f72585;
-            --success-color: #4cc9f0;
-            --light-color: #f8f9fa;
-            --dark-color: #212529;
-            --gray-color: #6c757d;
-            --sidebar-width: 280px;
-            --sidebar-bg: #2a3042;
-            --sidebar-text: #a6b0cf;
-            --sidebar-active: #4361ee;
-            --calendar-bg: #343b52;
-        }
+      :root {
+        --primary-color: #4361ee;
+        --secondary-color: #3f37c9;
+        --accent-color: #4895ef;
+        --danger-color: #f72585;
+        --success-color: #4cc9f0;
+        --light-color: #f8f9fa;
+        --dark-color: #212529;
+        --gray-color: #6c757d;
+        --sidebar-width: 280px;
+        --sidebar-bg: #2a3042;
+        --sidebar-text: #a6b0cf;
+        --sidebar-active: #4361ee;
+        --calendar-bg: #343b52;
+      }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
 
-        body {
-            display: flex;
-            min-height: 100vh;
-            background-color: #f5f7fa;
-            color: var(--dark-color);
-        }
+      body {
+        display: flex;
+        min-height: 100vh;
+        background-color: #f5f7fa;
+        color: var(--dark-color);
+      }
 
-        /* Sidebar Styles */
+      /* Sidebar Styles */
+      .sidebar {
+        width: var(--sidebar-width);
+        background-color: var(--sidebar-bg);
+        padding: 20px 0;
+        height: 100vh;
+        position: fixed;
+        transition: all 0.3s;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sidebar-header {
+        padding: 0 20px 20px;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .sidebar-header h3 {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+
+      .sidebar-header p {
+        color: var(--sidebar-text);
+        font-size: 0.8rem;
+      }
+
+      .sidebar-menu {
+        list-style: none;
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 0 10px;
+      }
+
+      .sidebar-menu li {
+        margin-bottom: 5px;
+      }
+
+      .sidebar-menu a {
+        display: flex;
+        align-items: center;
+        padding: 12px 15px;
+        color: var(--sidebar-text);
+        text-decoration: none;
+        transition: all 0.3s;
+        border-radius: 6px;
+        margin: 0 10px;
+      }
+
+      .sidebar-menu a:hover,
+      .sidebar-menu a.active {
+        background-color: rgba(67, 97, 238, 0.2);
+        color: white;
+      }
+
+      .sidebar-menu a.active {
+        background-color: var(--sidebar-active);
+        box-shadow: 0 4px 6px rgba(67, 97, 238, 0.2);
+      }
+
+      .sidebar-menu a i {
+        margin-right: 10px;
+        font-size: 1.1rem;
+        width: 20px;
+        text-align: center;
+      }
+
+      /* Calendar Styles */
+      .sidebar-calendar {
+        background-color: var(--calendar-bg);
+        margin: 15px;
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        color: white;
+      }
+
+      .calendar-header h4 {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      .calendar-nav {
+        display: flex;
+        gap: 10px;
+      }
+
+      .calendar-nav button {
+        background: none;
+        border: none;
+        color: var(--sidebar-text);
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+
+      .calendar-weekdays {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+        margin-bottom: 10px;
+        text-align: center;
+        color: var(--sidebar-text);
+        font-size: 0.7rem;
+      }
+
+      .calendar-days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+      }
+
+      .calendar-day {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 0.8rem;
+        cursor: pointer;
+        color: white;
+        transition: all 0.2s;
+      }
+
+      .calendar-day:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .calendar-day.today {
+        background-color: var(--primary-color);
+        font-weight: bold;
+      }
+
+      .calendar-day.other-month {
+        color: var(--sidebar-text);
+        opacity: 0.5;
+      }
+
+      .calendar-day.event {
+        position: relative;
+      }
+
+      .calendar-day.event::after {
+        content: "";
+        position: absolute;
+        bottom: 3px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background-color: var(--accent-color);
+      }
+
+      /* Main Content Styles */
+      .main-content {
+        flex: 1;
+        margin-left: var(--sidebar-width);
+        padding: 25px;
+        transition: all 0.3s;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .header h1 {
+        color: var(--dark-color);
+        font-size: 1.8rem;
+        font-weight: 600;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        background-color: white;
+        padding: 8px 15px;
+        border-radius: 30px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .user-info img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        margin-right: 10px;
+        border: 2px solid var(--primary-color);
+      }
+
+      .user-info span {
+        font-weight: 500;
+        color: var(--dark-color);
+      }
+
+      /* Card Styles */
+      .card {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        padding: 25px;
+        margin-bottom: 30px;
+        border: none;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .card-header h2 {
+        color: var(--dark-color);
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      /* Form Styles */
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--dark-color);
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s;
+        background-color: #f8f9fa;
+      }
+
+      .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        outline: none;
+        background-color: white;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .btn i {
+        margin-right: 8px;
+      }
+
+      .btn-primary {
+        background-color: var(--primary-color);
+        color: white;
+        box-shadow: 0 4px 6px rgba(67, 97, 238, 0.2);
+      }
+
+      .btn-primary:hover {
+        background-color: var(--secondary-color);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(67, 97, 238, 0.3);
+      }
+
+      .btn-danger {
+        background-color: var(--danger-color);
+        color: white;
+        box-shadow: 0 4px 6px rgba(247, 37, 133, 0.2);
+      }
+
+      .btn-danger:hover {
+        background-color: #d1146a;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(247, 37, 133, 0.3);
+      }
+
+      /* Table Styles */
+      .table-responsive {
+        overflow-x: auto;
+        border-radius: 10px;
+      }
+
+      .table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .table th,
+      .table td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+
+      .table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        color: var(--dark-color);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+      }
+
+      .table tr:hover {
+        background-color: #f8f9fa;
+      }
+
+      .table tr:last-child td {
+        border-bottom: none;
+      }
+
+      /* Alert Styles */
+      .alert {
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+      }
+
+      .alert i {
+        margin-right: 10px;
+        font-size: 1.2rem;
+      }
+
+      .alert-success {
+        background-color: rgba(76, 201, 240, 0.1);
+        color: #0d6e81;
+        border-left: 4px solid var(--success-color);
+      }
+
+      .alert-error {
+        background-color: rgba(247, 37, 133, 0.1);
+        color: #a11a56;
+        border-left: 4px solid var(--danger-color);
+      }
+
+      /* Search Results */
+      .search-results {
+        margin-top: 20px;
+      }
+
+      .student-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+        margin-bottom: 15px;
+        border-left: 4px solid var(--primary-color);
+        transition: all 0.3s;
+      }
+
+      .student-card:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .student-card h3 {
+        color: var(--primary-color);
+        margin-bottom: 10px;
+        font-size: 1.2rem;
+      }
+
+      .student-card p {
+        margin-bottom: 5px;
+        display: flex;
+      }
+
+      .student-card p strong {
+        min-width: 120px;
+        display: inline-block;
+        color: var(--gray-color);
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 992px) {
         .sidebar {
-            width: var(--sidebar-width);
-            background-color: var(--sidebar-bg);
-            padding: 20px 0;
-            height: 100vh;
-            position: fixed;
-            transition: all 0.3s;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
+          width: 0;
+          overflow: hidden;
         }
-
-        .sidebar-header {
-            padding: 0 20px 20px;
-            margin-bottom: 10px;
-            text-align: center;
+        .sidebar.active {
+          width: var(--sidebar-width);
         }
-
-        .sidebar-header h3 {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .sidebar-header p {
-            color: var(--sidebar-text);
-            font-size: 0.8rem;
-        }
-
-        .sidebar-menu {
-            list-style: none;
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 0 10px;
-        }
-
-        .sidebar-menu li {
-            margin-bottom: 5px;
-        }
-
-        .sidebar-menu a {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            color: var(--sidebar-text);
-            text-decoration: none;
-            transition: all 0.3s;
-            border-radius: 6px;
-            margin: 0 10px;
-        }
-
-        .sidebar-menu a:hover, .sidebar-menu a.active {
-            background-color: rgba(67, 97, 238, 0.2);
-            color: white;
-        }
-
-        .sidebar-menu a.active {
-            background-color: var(--sidebar-active);
-            box-shadow: 0 4px 6px rgba(67, 97, 238, 0.2);
-        }
-
-        .sidebar-menu a i {
-            margin-right: 10px;
-            font-size: 1.1rem;
-            width: 20px;
-            text-align: center;
-        }
-
-        /* Calendar Styles */
-        .sidebar-calendar {
-            background-color: var(--calendar-bg);
-            margin: 15px;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            color: white;
-        }
-
-        .calendar-header h4 {
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        .calendar-nav {
-            display: flex;
-            gap: 10px;
-        }
-
-        .calendar-nav button {
-            background: none;
-            border: none;
-            color: var(--sidebar-text);
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-
-        .calendar-weekdays {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-            margin-bottom: 10px;
-            text-align: center;
-            color: var(--sidebar-text);
-            font-size: 0.7rem;
-        }
-
-        .calendar-days {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-        }
-
-        .calendar-day {
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            font-size: 0.8rem;
-            cursor: pointer;
-            color: white;
-            transition: all 0.2s;
-        }
-
-        .calendar-day:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .calendar-day.today {
-            background-color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        .calendar-day.other-month {
-            color: var(--sidebar-text);
-            opacity: 0.5;
-        }
-
-        .calendar-day.event {
-            position: relative;
-        }
-
-        .calendar-day.event::after {
-            content: '';
-            position: absolute;
-            bottom: 3px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background-color: var(--accent-color);
-        }
-
-        /* Main Content Styles */
         .main-content {
-            flex: 1;
-            margin-left: var(--sidebar-width);
-            padding: 25px;
-            transition: all 0.3s;
+          margin-left: 0;
         }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .header h1 {
-            color: var(--dark-color);
-            font-size: 1.8rem;
-            font-weight: 600;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            background-color: white;
-            padding: 8px 15px;
-            border-radius: 30px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        .user-info img {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            margin-right: 10px;
-            border: 2px solid var(--primary-color);
-        }
-
-        .user-info span {
-            font-weight: 500;
-            color: var(--dark-color);
-        }
-
-        /* Card Styles */
-        .card {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            padding: 25px;
-            margin-bottom: 30px;
-            border: none;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .card-header h2 {
-            color: var(--dark-color);
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        /* Form Styles */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--dark-color);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s;
-            background-color: #f8f9fa;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
-            outline: none;
-            background-color: white;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn i {
-            margin-right: 8px;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-            box-shadow: 0 4px 6px rgba(67, 97, 238, 0.2);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(67, 97, 238, 0.3);
-        }
-
-        .btn-danger {
-            background-color: var(--danger-color);
-            color: white;
-            box-shadow: 0 4px 6px rgba(247, 37, 133, 0.2);
-        }
-
-        .btn-danger:hover {
-            background-color: #d1146a;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(247, 37, 133, 0.3);
-        }
-
-        /* Table Styles */
-        .table-responsive {
-            overflow-x: auto;
-            border-radius: 10px;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .table th, .table td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-
-        .table th {
-            background-color: #f8f9fa;
-            font-weight: 600;
-            color: var(--dark-color);
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 0.5px;
-        }
-
-        .table tr:hover {
-            background-color: #f8f9fa;
-        }
-
-        .table tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Alert Styles */
-        .alert {
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-        }
-
-        .alert i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-
-        .alert-success {
-            background-color: rgba(76, 201, 240, 0.1);
-            color: #0d6e81;
-            border-left: 4px solid var(--success-color);
-        }
-
-        .alert-error {
-            background-color: rgba(247, 37, 133, 0.1);
-            color: #a11a56;
-            border-left: 4px solid var(--danger-color);
-        }
-
-        /* Search Results */
-        .search-results {
-            margin-top: 20px;
-        }
-
-        .student-card {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            padding: 20px;
-            margin-bottom: 15px;
-            border-left: 4px solid var(--primary-color);
-            transition: all 0.3s;
-        }
-
-        .student-card:hover {
-            transform: translateX(5px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .student-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
-
-        .student-card p {
-            margin-bottom: 5px;
-            display: flex;
-        }
-
-        .student-card p strong {
-            min-width: 120px;
-            display: inline-block;
-            color: var(--gray-color);
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 992px) {
-            .sidebar {
-                width: 0;
-                overflow: hidden;
-            }
-            .sidebar.active {
-                width: var(--sidebar-width);
-            }
-            .main-content {
-                margin-left: 0;
-            }
-            .menu-toggle {
-                display: block;
-            }
-        }
-
-        /* Menu Toggle */
         .menu-toggle {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--dark-color);
-            background: none;
-            border: none;
+          display: block;
         }
+      }
 
-        /* Dashboard Stats */
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
+      /* Menu Toggle */
+      .menu-toggle {
+        display: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--dark-color);
+        background: none;
+        border: none;
+      }
 
-        .stat-card {
-            background-color: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            display: flex;
-            align-items: center;
-            transition: all 0.3s;
-            border-left: 4px solid var(--primary-color);
-        }
+      /* Dashboard Stats */
+      .stats-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
+      .stat-card {
+        background-color: white;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+        transition: all 0.3s;
+        border-left: 4px solid var(--primary-color);
+      }
 
-        .stat-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 20px;
-            font-size: 1.5rem;
-            color: white;
-            flex-shrink: 0;
-        }
+      .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
 
-        .stat-icon.primary {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        }
+      .stat-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+        font-size: 1.5rem;
+        color: white;
+        flex-shrink: 0;
+      }
 
-        .stat-icon.success {
-            background: linear-gradient(135deg, var(--success-color), #3a86ff);
-        }
+      .stat-icon.primary {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+      }
 
-        .stat-icon.danger {
-            background: linear-gradient(135deg, var(--danger-color), #b5179e);
-        }
+      .stat-icon.success {
+        background: linear-gradient(135deg, var(--success-color), #3a86ff);
+      }
 
-        .stat-info h3 {
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-            color: var(--dark-color);
-        }
+      .stat-icon.danger {
+        background: linear-gradient(135deg, var(--danger-color), #b5179e);
+      }
 
-        .stat-info p {
-            color: var(--gray-color);
-            font-size: 0.9rem;
-        }
+      .stat-info h3 {
+        font-size: 1.8rem;
+        margin-bottom: 5px;
+        color: var(--dark-color);
+      }
 
-        /* Recent Activities */
-        .activity-item {
-            display: flex;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
-        }
+      .stat-info p {
+        color: var(--gray-color);
+        font-size: 0.9rem;
+      }
 
-        .activity-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            color: white;
-            font-size: 1rem;
-            flex-shrink: 0;
-        }
+      /* Recent Activities */
+      .activity-item {
+        display: flex;
+        align-items: center;
+        padding: 15px 0;
+        border-bottom: 1px solid #eee;
+      }
 
-        .activity-icon.add {
-            background-color: var(--success-color);
-        }
+      .activity-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        color: white;
+        font-size: 1rem;
+        flex-shrink: 0;
+      }
 
-        .activity-icon.update {
-            background-color: var(--accent-color);
-        }
+      .activity-icon.add {
+        background-color: var(--success-color);
+      }
 
-        .activity-icon.delete {
-            background-color: var(--danger-color);
-        }
+      .activity-icon.update {
+        background-color: var(--accent-color);
+      }
 
-        .activity-details {
-            flex-grow: 1;
-        }
+      .activity-icon.delete {
+        background-color: var(--danger-color);
+      }
 
-        .activity-details p {
-            margin-bottom: 5px;
-        }
+      .activity-details {
+        flex-grow: 1;
+      }
 
-        .activity-time {
-            color: var(--gray-color);
-            font-size: 0.8rem;
-        }
+      .activity-details p {
+        margin-bottom: 5px;
+      }
 
-        /* Floating Action Button */
-        .fab {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: var(--primary-color);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
-            cursor: pointer;
-            z-index: 100;
-            transition: all 0.3s;
-        }
+      .activity-time {
+        color: var(--gray-color);
+        font-size: 0.8rem;
+      }
 
-        .fab:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
-        }
+      /* Floating Action Button */
+      .fab {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        cursor: pointer;
+        z-index: 100;
+        transition: all 0.3s;
+      }
 
-        /* Animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+      .fab:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+      }
 
-        .fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
+      /* Animation */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
         }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Sidebar -->
     <div class="sidebar">
-        <div class="sidebar-header">
-            <h3>Student Records</h3>
-            <p>Management System</p>
+      <div class="sidebar-header">
+        <h3>Student Records</h3>
+        <p>Management System</p>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li>
+          <a href="#" class="active" onclick="loadContent('dashboard')"
+            ><i class="fas fa-tachometer-alt"></i> Dashboard</a
+          >
+        </li>
+        <li>
+          <a href="#" onclick="loadContent('insert')"
+            ><i class="fas fa-user-plus"></i> Insert Student</a
+          >
+        </li>
+        <li>
+          <a href="#" onclick="loadContent('search')"
+            ><i class="fas fa-search"></i> Find Student</a
+          >
+        </li>
+        <li>
+          <a href="#" onclick="loadContent('all')"
+            ><i class="fas fa-users"></i> All Students</a
+          >
+        </li>
+        <li>
+          <a href="#" onclick="loadContent('update')"
+            ><i class="fas fa-edit"></i> Update Student</a
+          >
+        </li>
+        <li>
+          <a href="#" onclick="loadContent('delete')"
+            ><i class="fas fa-user-minus"></i> Delete Student</a
+          >
+        </li>
+      </ul>
+
+      <!-- Calendar Widget -->
+      <div class="sidebar-calendar">
+        <div class="calendar-header">
+          <h4 id="current-month">June 2023</h4>
+          <div class="calendar-nav">
+            <button onclick="prevMonth()">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button onclick="nextMonth()">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
         </div>
-        
-        <ul class="sidebar-menu">
-            <li><a href="#" class="active" onclick="loadContent('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-            <li><a href="#" onclick="loadContent('insert')"><i class="fas fa-user-plus"></i> Insert Student</a></li>
-            <li><a href="#" onclick="loadContent('search')"><i class="fas fa-search"></i> Find Student</a></li>
-            <li><a href="#" onclick="loadContent('all')"><i class="fas fa-users"></i> All Students</a></li>
-            <li><a href="#" onclick="loadContent('update')"><i class="fas fa-edit"></i> Update Student</a></li>
-            <li><a href="#" onclick="loadContent('delete')"><i class="fas fa-user-minus"></i> Delete Student</a></li>
-        </ul>
-        
-        <!-- Calendar Widget -->
-        <div class="sidebar-calendar">
-            <div class="calendar-header">
-                <h4 id="current-month">June 2023</h4>
-                <div class="calendar-nav">
-                    <button onclick="prevMonth()"><i class="fas fa-chevron-left"></i></button>
-                    <button onclick="nextMonth()"><i class="fas fa-chevron-right"></i></button>
-                </div>
-            </div>
-            <div class="calendar-weekdays">
-                <div>Sun</div>
-                <div>Mon</div>
-                <div>Tue</div>
-                <div>Wed</div>
-                <div>Thu</div>
-                <div>Fri</div>
-                <div>Sat</div>
-            </div>
-            <div class="calendar-days" id="calendar-days">
-                <!-- Days will be populated by JavaScript -->
-            </div>
+        <div class="calendar-weekdays">
+          <div>Sun</div>
+          <div>Mon</div>
+          <div>Tue</div>
+          <div>Wed</div>
+          <div>Thu</div>
+          <div>Fri</div>
+          <div>Sat</div>
         </div>
+        <div class="calendar-days" id="calendar-days">
+          <!-- Days will be populated by JavaScript -->
+        </div>
+      </div>
     </div>
 
     <!-- Main Content -->
     <div class="main-content">
-        <div class="header">
-            <button class="menu-toggle" onclick="toggleSidebar()">
-                <i class="fas fa-bars"></i>
+      <div class="header">
+        <button class="menu-toggle" onclick="toggleSidebar()">
+          <i class="fas fa-bars"></i>
+        </button>
+        <h1>Dashboard</h1>
+        <div class="user-info">
+          <img
+            src="https://ui-avatars.com/api/?name=Admin&background=4361ee&color=fff"
+            alt="Admin"
+          />
+          <span>Admin</span>
+        </div>
+      </div>
+
+      <!-- Content will be loaded here dynamically -->
+      <div id="content-area">
+        <!-- Dashboard Content -->
+        <div class="stats-container">
+          <div class="stat-card">
+            <div class="stat-icon primary">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="totalStudents">0</h3>
+              <p>Total Students</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon success">
+              <i class="fas fa-user-plus"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="newStudents">+24</h3>
+              <p>New This Month</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon danger">
+              <i class="fas fa-user-graduate"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="graduatingStudents">15</h3>
+              <p>Graduating Soon</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card fade-in">
+          <div class="card-header">
+            <h2>Recent Activities</h2>
+            <button class="btn btn-primary" onclick="loadRecentActivities()">
+              <i class="fas fa-sync-alt"></i> Refresh
             </button>
-            <h1>Dashboard</h1>
-            <div class="user-info">
-                <img src="https://ui-avatars.com/api/?name=Admin&background=4361ee&color=fff" alt="Admin">
-                <span>Admin</span>
+          </div>
+          <div id="activities-list">
+            <div class="activity-item">
+              <div class="activity-icon add">
+                <i class="fas fa-plus"></i>
+              </div>
+              <div class="activity-details">
+                <p>
+                  Added new student <strong>Kethaka Senanayaka</strong> (SID:
+                  12345)
+                </p>
+                <p class="activity-time">2 hours ago</p>
+              </div>
             </div>
+            <div class="activity-item">
+              <div class="activity-icon update">
+                <i class="fas fa-edit"></i>
+              </div>
+              <div class="activity-details">
+                <p>
+                  Updated record for <strong>Kethaka Senanayaka</strong> (SID:
+                  54321)
+                </p>
+                <p class="activity-time">5 hours ago</p>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon delete">
+                <i class="fas fa-trash"></i>
+              </div>
+              <div class="activity-details">
+                <p>
+                  Deleted student <strong>Kethaka Senanayaka</strong> (SID:
+                  67890)
+                </p>
+                <p class="activity-time">Yesterday</p>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <!-- Content will be loaded here dynamically -->
-        <div id="content-area">
-            <!-- Dashboard Content -->
-            <div class="stats-container">
-                <div class="stat-card">
-                    <div class="stat-icon primary">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="totalStudents">0</h3>
-                        <p>Total Students</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon success">
-                        <i class="fas fa-user-plus"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="newStudents">+24</h3>
-                        <p>New This Month</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon danger">
-                        <i class="fas fa-user-graduate"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="graduatingStudents">15</h3>
-                        <p>Graduating Soon</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card fade-in">
-                <div class="card-header">
-                    <h2>Recent Activities</h2>
-                    <button class="btn btn-primary" onclick="loadRecentActivities()">
-                        <i class="fas fa-sync-alt"></i> Refresh
-                    </button>
-                </div>
-                <div id="activities-list">
-                    <div class="activity-item">
-                        <div class="activity-icon add">
-                            <i class="fas fa-plus"></i>
-                        </div>
-                        <div class="activity-details">
-                            <p>Added new student <strong>John Doe</strong> (SID: 12345)</p>
-                            <p class="activity-time">2 hours ago</p>
-                        </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-icon update">
-                            <i class="fas fa-edit"></i>
-                        </div>
-                        <div class="activity-details">
-                            <p>Updated record for <strong>Jane Smith</strong> (SID: 54321)</p>
-                            <p class="activity-time">5 hours ago</p>
-                        </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-icon delete">
-                            <i class="fas fa-trash"></i>
-                        </div>
-                        <div class="activity-details">
-                            <p>Deleted student <strong>Robert Johnson</strong> (SID: 67890)</p>
-                            <p class="activity-time">Yesterday</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
 
     <!-- Floating Action Button -->
     <div class="fab" onclick="loadContent('insert')">
-        <i class="fas fa-plus"></i>
+      <i class="fas fa-plus"></i>
     </div>
 
     <!-- Templates for dynamic content -->
     <template id="insert-template">
-        <div class="card fade-in">
-            <div class="card-header">
-                <h2><i class="fas fa-user-plus"></i> Insert New Student</h2>
-            </div>
-            <form id="insertStudentForm">
-                <div class="form-group">
-                    <label for="sid"><i class="fas fa-id-card"></i> Student ID</label>
-                    <input type="text" class="form-control" id="sid" name="sid" required>
-                </div>
-                <div class="form-group">
-                    <label for="firstName"><i class="fas fa-user"></i> First Name</label>
-                    <input type="text" class="form-control" id="firstName" name="firstName" required>
-                </div>
-                <div class="form-group">
-                    <label for="lastName"><i class="fas fa-user"></i> Last Name</label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" required>
-                </div>
-                <div class="form-group">
-                    <label for="email"><i class="fas fa-envelope"></i> Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="nearestCity"><i class="fas fa-city"></i> Nearest City</label>
-                    <input type="text" class="form-control" id="nearestCity" name="nearestCity">
-                </div>
-                <div class="form-group">
-                    <label for="course"><i class="fas fa-graduation-cap"></i> Course</label>
-                    <input type="text" class="form-control" id="course" name="course">
-                </div>
-                <div class="form-group">
-                    <label for="guardian"><i class="fas fa-user-shield"></i> Guardian</label>
-                    <input type="text" class="form-control" id="guardian" name="guardian">
-                </div>
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i> Insert Student
-                </button>
-            </form>
+      <div class="card fade-in">
+        <div class="card-header">
+          <h2><i class="fas fa-user-plus"></i> Insert New Student</h2>
         </div>
+        <form id="insertStudentForm">
+          <div class="form-group">
+            <label for="sid"><i class="fas fa-id-card"></i> Student ID</label>
+            <input
+              type="text"
+              class="form-control"
+              id="sid"
+              name="sid"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="firstName"
+              ><i class="fas fa-user"></i> First Name</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="firstName"
+              name="firstName"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="lastName"><i class="fas fa-user"></i> Last Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="lastName"
+              name="lastName"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="email"><i class="fas fa-envelope"></i> Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              name="email"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="nearestCity"
+              ><i class="fas fa-city"></i> Nearest City</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="nearestCity"
+              name="nearestCity"
+            />
+          </div>
+          <div class="form-group">
+            <label for="course"
+              ><i class="fas fa-graduation-cap"></i> Course</label
+            >
+            <input type="text" class="form-control" id="course" name="course" />
+          </div>
+          <div class="form-group">
+            <label for="guardian"
+              ><i class="fas fa-user-shield"></i> Guardian</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="guardian"
+              name="guardian"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> Insert Student
+          </button>
+        </form>
+      </div>
     </template>
 
     <template id="search-template">
-        <div class="card fade-in">
-            <div class="card-header">
-                <h2><i class="fas fa-search"></i> Find Student</h2>
-            </div>
-            <div class="form-group">
-                <label for="searchInput"><i class="fas fa-search"></i> Enter Search Value</label>
-                <input type="text" class="form-control" id="searchInput" placeholder="Enter search value">
-            </div>
-            <div class="form-group">
-                <label for="searchType"><i class="fas fa-filter"></i> Select Search Type</label>
-                <select class="form-control" id="searchType">
-                    <option value="findBySid">Find by SID</option>
-                    <option value="findByFirstName">Find by First Name</option>
-                    <option value="findByLastName">Find by Last Name</option>
-                    <option value="findByEmail">Find by Email</option>
-                    <option value="findByCity">Find by Nearest City</option>
-                    <option value="findByCourse">Find by Course</option>
-                    <option value="findByGuardian">Find by Guardian</option>
-                </select>
-            </div>
-            <button onclick="searchStudent()" class="btn btn-primary">
-                <i class="fas fa-search"></i> Search
-            </button>
-            
-            <div id="results" class="search-results"></div>
+      <div class="card fade-in">
+        <div class="card-header">
+          <h2><i class="fas fa-search"></i> Find Student</h2>
         </div>
+        <div class="form-group">
+          <label for="searchInput"
+            ><i class="fas fa-search"></i> Enter Search Value</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="searchInput"
+            placeholder="Enter search value"
+          />
+        </div>
+        <div class="form-group">
+          <label for="searchType"
+            ><i class="fas fa-filter"></i> Select Search Type</label
+          >
+          <select class="form-control" id="searchType">
+            <option value="findBySid">Find by SID</option>
+            <option value="findByFirstName">Find by First Name</option>
+            <option value="findByLastName">Find by Last Name</option>
+            <option value="findByEmail">Find by Email</option>
+            <option value="findByCity">Find by Nearest City</option>
+            <option value="findByCourse">Find by Course</option>
+            <option value="findByGuardian">Find by Guardian</option>
+          </select>
+        </div>
+        <button onclick="searchStudent()" class="btn btn-primary">
+          <i class="fas fa-search"></i> Search
+        </button>
+
+        <div id="results" class="search-results"></div>
+      </div>
     </template>
 
     <template id="all-template">
-        <div class="card fade-in">
-            <div class="card-header">
-                <h2><i class="fas fa-users"></i> All Students</h2>
-                <button class="btn btn-primary" onclick="loadAllStudents()">
-                    <i class="fas fa-sync-alt"></i> Refresh List
-                </button>
-            </div>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>SID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>City</th>
-                            <th>Course</th>
-                            <th>Guardian</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="studentTableBody">
-                        <!-- Student data will be loaded here -->
-                    </tbody>
-                </table>
-            </div>
+      <div class="card fade-in">
+        <div class="card-header">
+          <h2><i class="fas fa-users"></i> All Students</h2>
+          <button class="btn btn-primary" onclick="loadAllStudents()">
+            <i class="fas fa-sync-alt"></i> Refresh List
+          </button>
         </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>SID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>City</th>
+                <th>Course</th>
+                <th>Guardian</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="studentTableBody">
+              <!-- Student data will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
     </template>
 
     <template id="update-template">
-        <div class="card fade-in">
-            <div class="card-header">
-                <h2><i class="fas fa-edit"></i> Update Student</h2>
-            </div>
-            <form id="updateBySidForm">
-                <div class="form-group">
-                    <label for="update-sid"><i class="fas fa-id-card"></i> Student ID</label>
-                    <input type="text" class="form-control" id="update-sid" name="sid" required>
-                </div>
-                <div class="form-group">
-                    <label for="update-firstName"><i class="fas fa-user"></i> First Name</label>
-                    <input type="text" class="form-control" id="update-firstName" name="firstName" required>
-                </div>
-                <div class="form-group">
-                    <label for="update-lastName"><i class="fas fa-user"></i> Last Name</label>
-                    <input type="text" class="form-control" id="update-lastName" name="lastName" required>
-                </div>
-                <div class="form-group">
-                    <label for="update-email"><i class="fas fa-envelope"></i> Email</label>
-                    <input type="email" class="form-control" id="update-email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="update-nearestCity"><i class="fas fa-city"></i> Nearest City</label>
-                    <input type="text" class="form-control" id="update-nearestCity" name="nearestCity">
-                </div>
-                <div class="form-group">
-                    <label for="update-course"><i class="fas fa-graduation-cap"></i> Course</label>
-                    <input type="text" class="form-control" id="update-course" name="course">
-                </div>
-                <div class="form-group">
-                    <label for="update-guardian"><i class="fas fa-user-shield"></i> Guardian</label>
-                    <input type="text" class="form-control" id="update-guardian" name="guardian">
-                </div>
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i> Update Student
-                </button>
-            </form>
+      <div class="card fade-in">
+        <div class="card-header">
+          <h2><i class="fas fa-edit"></i> Update Student</h2>
         </div>
+        <form id="updateBySidForm">
+          <div class="form-group">
+            <label for="update-sid"
+              ><i class="fas fa-id-card"></i> Student ID</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="update-sid"
+              name="sid"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="update-firstName"
+              ><i class="fas fa-user"></i> First Name</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="update-firstName"
+              name="firstName"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="update-lastName"
+              ><i class="fas fa-user"></i> Last Name</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="update-lastName"
+              name="lastName"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="update-email"
+              ><i class="fas fa-envelope"></i> Email</label
+            >
+            <input
+              type="email"
+              class="form-control"
+              id="update-email"
+              name="email"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="update-nearestCity"
+              ><i class="fas fa-city"></i> Nearest City</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="update-nearestCity"
+              name="nearestCity"
+            />
+          </div>
+          <div class="form-group">
+            <label for="update-course"
+              ><i class="fas fa-graduation-cap"></i> Course</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="update-course"
+              name="course"
+            />
+          </div>
+          <div class="form-group">
+            <label for="update-guardian"
+              ><i class="fas fa-user-shield"></i> Guardian</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="update-guardian"
+              name="guardian"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> Update Student
+          </button>
+        </form>
+      </div>
     </template>
 
     <template id="delete-template">
-        <div class="card fade-in">
-            <div class="card-header">
-                <h2><i class="fas fa-user-minus"></i> Delete Student</h2>
-            </div>
-            <form id="deleteStudentForm">
-                <div class="form-group">
-                    <label for="delete-sid"><i class="fas fa-id-card"></i> Enter SID to delete</label>
-                    <input type="text" class="form-control" id="delete-sid" placeholder="Enter SID" required>
-                </div>
-                <button type="submit" class="btn btn-danger">
-                    <i class="fas fa-trash"></i> Delete Student
-                </button>
-            </form>
-            <div id="delete-message" class="mt-3"></div>
+      <div class="card fade-in">
+        <div class="card-header">
+          <h2><i class="fas fa-user-minus"></i> Delete Student</h2>
         </div>
+        <form id="deleteStudentForm">
+          <div class="form-group">
+            <label for="delete-sid"
+              ><i class="fas fa-id-card"></i> Enter SID to delete</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="delete-sid"
+              placeholder="Enter SID"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-danger">
+            <i class="fas fa-trash"></i> Delete Student
+          </button>
+        </form>
+        <div id="delete-message" class="mt-3"></div>
+      </div>
     </template>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // Current date for calendar
-        let currentDate = new Date();
-        let currentMonth = currentDate.getMonth();
-        let currentYear = currentDate.getFullYear();
+      // Current date for calendar
+      let currentDate = new Date();
+      let currentMonth = currentDate.getMonth();
+      let currentYear = currentDate.getFullYear();
 
-        // Initialize calendar
-        function renderCalendar() {
-            const monthNames = ["January", "February", "March", "April", "May", "June",
-                                "July", "August", "September", "October", "November", "December"];
-            
-            document.getElementById('current-month').textContent = 
-                `${monthNames[currentMonth]} ${currentYear}`;
-            
-            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-            const daysInPrevMonth = new Date(currentYear, currentMonth, 0).getDate();
-            
-            let calendarDays = document.getElementById('calendar-days');
-            calendarDays.innerHTML = '';
-            
-            // Previous month days
-            for (let i = firstDay - 1; i >= 0; i--) {
-                const dayElement = document.createElement('div');
-                dayElement.className = 'calendar-day other-month';
-                dayElement.textContent = daysInPrevMonth - i;
-                calendarDays.appendChild(dayElement);
-            }
-            
-            // Current month days
-            const today = new Date();
-            for (let i = 1; i <= daysInMonth; i++) {
-                const dayElement = document.createElement('div');
-                dayElement.className = 'calendar-day';
-                dayElement.textContent = i;
-                
-                // Highlight today
-                if (i === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
-                    dayElement.classList.add('today');
-                }
-                
-                // Add event indicator (random for demo)
-                if (Math.random() > 0.7) {
-                    dayElement.classList.add('event');
-                }
-                
-                calendarDays.appendChild(dayElement);
-            }
-            
-            // Next month days
-            const totalCells = firstDay + daysInMonth;
-            const remainingCells = totalCells > 35 ? 42 - totalCells : 35 - totalCells;
-            
-            for (let i = 1; i <= remainingCells; i++) {
-                const dayElement = document.createElement('div');
-                dayElement.className = 'calendar-day other-month';
-                dayElement.textContent = i;
-                calendarDays.appendChild(dayElement);
-            }
+      // Initialize calendar
+      function renderCalendar() {
+        const monthNames = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+
+        document.getElementById(
+          "current-month"
+        ).textContent = `${monthNames[currentMonth]} ${currentYear}`;
+
+        const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+        const daysInMonth = new Date(
+          currentYear,
+          currentMonth + 1,
+          0
+        ).getDate();
+        const daysInPrevMonth = new Date(
+          currentYear,
+          currentMonth,
+          0
+        ).getDate();
+
+        let calendarDays = document.getElementById("calendar-days");
+        calendarDays.innerHTML = "";
+
+        // Previous month days
+        for (let i = firstDay - 1; i >= 0; i--) {
+          const dayElement = document.createElement("div");
+          dayElement.className = "calendar-day other-month";
+          dayElement.textContent = daysInPrevMonth - i;
+          calendarDays.appendChild(dayElement);
         }
 
-        function prevMonth() {
-            currentMonth--;
-            if (currentMonth < 0) {
-                currentMonth = 11;
-                currentYear--;
-            }
-            renderCalendar();
+        // Current month days
+        const today = new Date();
+        for (let i = 1; i <= daysInMonth; i++) {
+          const dayElement = document.createElement("div");
+          dayElement.className = "calendar-day";
+          dayElement.textContent = i;
+
+          // Highlight today
+          if (
+            i === today.getDate() &&
+            currentMonth === today.getMonth() &&
+            currentYear === today.getFullYear()
+          ) {
+            dayElement.classList.add("today");
+          }
+
+          // Add event indicator (random for demo)
+          if (Math.random() > 0.7) {
+            dayElement.classList.add("event");
+          }
+
+          calendarDays.appendChild(dayElement);
         }
 
-        function nextMonth() {
-            currentMonth++;
-            if (currentMonth > 11) {
-                currentMonth = 0;
-                currentYear++;
-            }
-            renderCalendar();
+        // Next month days
+        const totalCells = firstDay + daysInMonth;
+        const remainingCells =
+          totalCells > 35 ? 42 - totalCells : 35 - totalCells;
+
+        for (let i = 1; i <= remainingCells; i++) {
+          const dayElement = document.createElement("div");
+          dayElement.className = "calendar-day other-month";
+          dayElement.textContent = i;
+          calendarDays.appendChild(dayElement);
+        }
+      }
+
+      function prevMonth() {
+        currentMonth--;
+        if (currentMonth < 0) {
+          currentMonth = 11;
+          currentYear--;
+        }
+        renderCalendar();
+      }
+
+      function nextMonth() {
+        currentMonth++;
+        if (currentMonth > 11) {
+          currentMonth = 0;
+          currentYear++;
+        }
+        renderCalendar();
+      }
+
+      // Toggle sidebar on mobile
+      function toggleSidebar() {
+        document.querySelector(".sidebar").classList.toggle("active");
+      }
+
+      // Load content dynamically
+      function loadContent(page) {
+        const contentArea = document.getElementById("content-area");
+        const template = document.getElementById(`${page}-template`);
+
+        if (template) {
+          contentArea.innerHTML = "";
+          contentArea.appendChild(template.content.cloneNode(true));
         }
 
-        // Toggle sidebar on mobile
-        function toggleSidebar() {
-            document.querySelector('.sidebar').classList.toggle('active');
-        }
-
-        // Load content dynamically
-        function loadContent(page) {
-            const contentArea = document.getElementById('content-area');
-            const template = document.getElementById(`${page}-template`);
-            
-            if (template) {
-                contentArea.innerHTML = '';
-                contentArea.appendChild(template.content.cloneNode(true));
-            }
-            
-            // Update active menu item
-            document.querySelectorAll('.sidebar-menu a').forEach(item => {
-                item.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            // Update page title
-            let pageTitle = page.charAt(0).toUpperCase() + page.slice(1).replace('-', ' ');
-            if (page === 'all') pageTitle = 'All Students';
-            document.querySelector('.header h1').innerHTML = pageTitle;
-            
-            // Load specific data if needed
-            if (page === 'all') {
-                loadAllStudents();
-            } else if (page === 'dashboard') {
-                updateDashboardStats();
-            }
-        }
-
-        // Update dashboard statistics
-        function updateDashboardStats() {
-            $.ajax({
-                url: 'http://localhost:5000/api/students/countStudents',
-                type: 'GET',
-                success: function(data) {
-                    document.getElementById('totalStudents').textContent = data.totalStudents;
-                    // For demo, we'll randomize the other stats
-                    document.getElementById('newStudents').textContent = `+${Math.floor(Math.random() * 20) + 5}`;
-                    document.getElementById('graduatingStudents').textContent = Math.floor(Math.random() * 30) + 10;
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching student count:', error);
-                }
-            });
-        }
-
-        // Insert Student Form
-        document.addEventListener('submit', function(e) {
-            if (e.target && e.target.id === 'insertStudentForm') {
-                e.preventDefault();
-                const formData = {
-                    sid: document.getElementById('sid').value,
-                    firstName: document.getElementById('firstName').value,
-                    lastName: document.getElementById('lastName').value,
-                    email: document.getElementById('email').value,
-                    nearestCity: document.getElementById('nearestCity').value,
-                    course: document.getElementById('course').value,
-                    guardian: document.getElementById('guardian').value,
-                };
-                
-                $.ajax({
-                    url: 'http://localhost:5000/api/students/insert',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(formData),
-                    success: function(response) {
-                        const alertDiv = document.createElement('div');
-                        alertDiv.className = 'alert alert-success';
-                        alertDiv.innerHTML = '<i class="fas fa-check-circle"></i> Student inserted successfully!';
-                        document.getElementById('insertStudentForm').prepend(alertDiv);
-                        document.getElementById('insertStudentForm').reset();
-                        updateDashboardStats();
-                        
-                        // Remove alert after 3 seconds
-                        setTimeout(() => {
-                            alertDiv.remove();
-                        }, 3000);
-                    },
-                                        error: function(xhr, status, error) {
-                        const result = JSON.parse(xhr.responseText);
-                        const alertDiv = document.createElement('div');
-                        alertDiv.className = 'alert alert-error';
-                        alertDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> Error: ${result.message}`;
-                        document.getElementById('insertStudentForm').prepend(alertDiv);
-                        
-                        // Remove alert after 5 seconds
-                        setTimeout(() => {
-                            alertDiv.remove();
-                        }, 5000);
-                    }
-                });
-            }
+        // Update active menu item
+        document.querySelectorAll(".sidebar-menu a").forEach((item) => {
+          item.classList.remove("active");
         });
+        event.target.classList.add("active");
 
-        // Search Student
-        function searchStudent() {
-            const searchType = document.getElementById('searchType').value;
-            const searchValue = document.getElementById('searchInput').value;
-            const resultsDiv = document.getElementById('results');
-            
-            resultsDiv.innerHTML = '<div class="alert"><i class="fas fa-spinner fa-spin"></i> Searching...</div>';
-            
-            if (!searchValue) {
-                resultsDiv.innerHTML = '<div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> Please enter a search value.</div>';
-                return;
-            }
-            
-            $.ajax({
-                url: `http://localhost:5000/api/students/${searchType}/${searchValue}`,
-                type: 'GET',
-                success: function(data) {
-                    resultsDiv.innerHTML = '';
-                    
-                    if (data.message) {
-                        resultsDiv.innerHTML = `<div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> ${data.message}</div>`;
-                    } else if (Array.isArray(data)) {
-                        if (data.length === 0) {
-                            resultsDiv.innerHTML = '<div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> No students found matching your criteria.</div>';
-                        } else {
-                            const resultsHeader = document.createElement('h3');
-                            resultsHeader.className = 'results-header';
-                            resultsHeader.innerHTML = `<i class="fas fa-search"></i> Search Results (${data.length} found)`;
-                            resultsDiv.appendChild(resultsHeader);
-                            
-                            data.forEach(student => {
-                                const studentCard = document.createElement('div');
-                                studentCard.className = 'student-card fade-in';
-                                studentCard.innerHTML = `
-                                    <h3>${student.firstName} ${student.lastName}</h3>
-                                    <p><strong><i class="fas fa-id-card"></i> SID:</strong> ${student.sid}</p>
-                                    <p><strong><i class="fas fa-envelope"></i> Email:</strong> ${student.email}</p>
-                                    <p><strong><i class="fas fa-city"></i> Nearest City:</strong> ${student.nearestCity || 'N/A'}</p>
-                                    <p><strong><i class="fas fa-graduation-cap"></i> Course:</strong> ${student.course || 'N/A'}</p>
-                                    <p><strong><i class="fas fa-user-shield"></i> Guardian:</strong> ${student.guardian || 'N/A'}</p>
+        // Update page title
+        let pageTitle =
+          page.charAt(0).toUpperCase() + page.slice(1).replace("-", " ");
+        if (page === "all") pageTitle = "All Students";
+        document.querySelector(".header h1").innerHTML = pageTitle;
+
+        // Load specific data if needed
+        if (page === "all") {
+          loadAllStudents();
+        } else if (page === "dashboard") {
+          updateDashboardStats();
+        }
+      }
+
+      // Update dashboard statistics
+      function updateDashboardStats() {
+        $.ajax({
+          url: "http://localhost:5000/api/students/countStudents",
+          type: "GET",
+          success: function (data) {
+            document.getElementById("totalStudents").textContent =
+              data.totalStudents;
+            // For demo, we'll randomize the other stats
+            document.getElementById("newStudents").textContent = `+${
+              Math.floor(Math.random() * 20) + 5
+            }`;
+            document.getElementById("graduatingStudents").textContent =
+              Math.floor(Math.random() * 30) + 10;
+          },
+          error: function (xhr, status, error) {
+            console.error("Error fetching student count:", error);
+          },
+        });
+      }
+
+      // Insert Student Form
+      document.addEventListener("submit", function (e) {
+        if (e.target && e.target.id === "insertStudentForm") {
+          e.preventDefault();
+          const formData = {
+            sid: document.getElementById("sid").value,
+            firstName: document.getElementById("firstName").value,
+            lastName: document.getElementById("lastName").value,
+            email: document.getElementById("email").value,
+            nearestCity: document.getElementById("nearestCity").value,
+            course: document.getElementById("course").value,
+            guardian: document.getElementById("guardian").value,
+          };
+
+          $.ajax({
+            url: "http://localhost:5000/api/students/insert",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(formData),
+            success: function (response) {
+              const alertDiv = document.createElement("div");
+              alertDiv.className = "alert alert-success";
+              alertDiv.innerHTML =
+                '<i class="fas fa-check-circle"></i> Student inserted successfully!';
+              document.getElementById("insertStudentForm").prepend(alertDiv);
+              document.getElementById("insertStudentForm").reset();
+              updateDashboardStats();
+
+              // Remove alert after 3 seconds
+              setTimeout(() => {
+                alertDiv.remove();
+              }, 3000);
+            },
+            error: function (xhr, status, error) {
+              const result = JSON.parse(xhr.responseText);
+              const alertDiv = document.createElement("div");
+              alertDiv.className = "alert alert-error";
+              alertDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> Error: ${result.message}`;
+              document.getElementById("insertStudentForm").prepend(alertDiv);
+
+              // Remove alert after 5 seconds
+              setTimeout(() => {
+                alertDiv.remove();
+              }, 5000);
+            },
+          });
+        }
+      });
+
+      // Search Student
+      function searchStudent() {
+        const searchType = document.getElementById("searchType").value;
+        const searchValue = document.getElementById("searchInput").value;
+        const resultsDiv = document.getElementById("results");
+
+        resultsDiv.innerHTML =
+          '<div class="alert"><i class="fas fa-spinner fa-spin"></i> Searching...</div>';
+
+        if (!searchValue) {
+          resultsDiv.innerHTML =
+            '<div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> Please enter a search value.</div>';
+          return;
+        }
+
+        $.ajax({
+          url: `http://localhost:5000/api/students/${searchType}/${searchValue}`,
+          type: "GET",
+          success: function (data) {
+            resultsDiv.innerHTML = "";
+
+            if (data.message) {
+              resultsDiv.innerHTML = `<div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> ${data.message}</div>`;
+            } else if (Array.isArray(data)) {
+              if (data.length === 0) {
+                resultsDiv.innerHTML =
+                  '<div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> No students found matching your criteria.</div>';
+              } else {
+                const resultsHeader = document.createElement("h3");
+                resultsHeader.className = "results-header";
+                resultsHeader.innerHTML = `<i class="fas fa-search"></i> Search Results (${data.length} found)`;
+                resultsDiv.appendChild(resultsHeader);
+
+                data.forEach((student) => {
+                  const studentCard = document.createElement("div");
+                  studentCard.className = "student-card fade-in";
+                  studentCard.innerHTML = `
+                                    <h3>${student.firstName} ${
+                    student.lastName
+                  }</h3>
+                                    <p><strong><i class="fas fa-id-card"></i> SID:</strong> ${
+                                      student.sid
+                                    }</p>
+                                    <p><strong><i class="fas fa-envelope"></i> Email:</strong> ${
+                                      student.email
+                                    }</p>
+                                    <p><strong><i class="fas fa-city"></i> Nearest City:</strong> ${
+                                      student.nearestCity || "N/A"
+                                    }</p>
+                                    <p><strong><i class="fas fa-graduation-cap"></i> Course:</strong> ${
+                                      student.course || "N/A"
+                                    }</p>
+                                    <p><strong><i class="fas fa-user-shield"></i> Guardian:</strong> ${
+                                      student.guardian || "N/A"
+                                    }</p>
                                     <div class="student-actions">
-                                        <button onclick="loadStudentForUpdate('${student.sid}')" class="btn btn-primary btn-sm">
+                                        <button onclick="loadStudentForUpdate('${
+                                          student.sid
+                                        }')" class="btn btn-primary btn-sm">
                                             <i class="fas fa-edit"></i> Edit
                                         </button>
-                                        <button onclick="confirmDelete('${student.sid}', '${student.firstName} ${student.lastName}')" class="btn btn-danger btn-sm">
+                                        <button onclick="confirmDelete('${
+                                          student.sid
+                                        }', '${student.firstName} ${
+                    student.lastName
+                  }')" class="btn btn-danger btn-sm">
                                             <i class="fas fa-trash"></i> Delete
                                         </button>
                                     </div>
                                 `;
-                                resultsDiv.appendChild(studentCard);
-                            });
-                        }
-                    } else {
-                        const studentCard = document.createElement('div');
-                        studentCard.className = 'student-card fade-in';
-                        studentCard.innerHTML = `
+                  resultsDiv.appendChild(studentCard);
+                });
+              }
+            } else {
+              const studentCard = document.createElement("div");
+              studentCard.className = "student-card fade-in";
+              studentCard.innerHTML = `
                             <h3>${data.firstName} ${data.lastName}</h3>
-                            <p><strong><i class="fas fa-id-card"></i> SID:</strong> ${data.sid}</p>
-                            <p><strong><i class="fas fa-envelope"></i> Email:</strong> ${data.email}</p>
-                            <p><strong><i class="fas fa-city"></i> Nearest City:</strong> ${data.nearestCity || 'N/A'}</p>
-                            <p><strong><i class="fas fa-graduation-cap"></i> Course:</strong> ${data.course || 'N/A'}</p>
-                            <p><strong><i class="fas fa-user-shield"></i> Guardian:</strong> ${data.guardian || 'N/A'}</p>
+                            <p><strong><i class="fas fa-id-card"></i> SID:</strong> ${
+                              data.sid
+                            }</p>
+                            <p><strong><i class="fas fa-envelope"></i> Email:</strong> ${
+                              data.email
+                            }</p>
+                            <p><strong><i class="fas fa-city"></i> Nearest City:</strong> ${
+                              data.nearestCity || "N/A"
+                            }</p>
+                            <p><strong><i class="fas fa-graduation-cap"></i> Course:</strong> ${
+                              data.course || "N/A"
+                            }</p>
+                            <p><strong><i class="fas fa-user-shield"></i> Guardian:</strong> ${
+                              data.guardian || "N/A"
+                            }</p>
                             <div class="student-actions">
-                                <button onclick="loadStudentForUpdate('${data.sid}')" class="btn btn-primary btn-sm">
+                                <button onclick="loadStudentForUpdate('${
+                                  data.sid
+                                }')" class="btn btn-primary btn-sm">
                                     <i class="fas fa-edit"></i> Edit
                                 </button>
-                                <button onclick="confirmDelete('${data.sid}', '${data.firstName} ${data.lastName}')" class="btn btn-danger btn-sm">
+                                <button onclick="confirmDelete('${
+                                  data.sid
+                                }', '${data.firstName} ${
+                data.lastName
+              }')" class="btn btn-danger btn-sm">
                                     <i class="fas fa-trash"></i> Delete
                                 </button>
                             </div>
                         `;
-                        resultsDiv.appendChild(studentCard);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    resultsDiv.innerHTML = '<div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> There was an error with the request. Please try again.</div>';
-                }
-            });
-        }
+              resultsDiv.appendChild(studentCard);
+            }
+          },
+          error: function (xhr, status, error) {
+            resultsDiv.innerHTML =
+              '<div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> There was an error with the request. Please try again.</div>';
+          },
+        });
+      }
 
-        // Load All Students
-        function loadAllStudents() {
-            const studentTable = document.getElementById('studentTableBody');
-            studentTable.innerHTML = '<tr><td colspan="8" class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading students...</td></tr>';
-            
-            $.ajax({
-                url: 'http://localhost:5000/api/students/getAllStudents',
-                type: 'GET',
-                success: function(students) {
-                    studentTable.innerHTML = '';
-                    
-                    if (students.length === 0) {
-                        studentTable.innerHTML = '<tr><td colspan="8" class="text-center">No students found</td></tr>';
-                    } else {
-                        students.forEach((student) => {
-                            const row = document.createElement('tr');
-                            row.className = 'fade-in';
-                            row.innerHTML = `
+      // Load All Students
+      function loadAllStudents() {
+        const studentTable = document.getElementById("studentTableBody");
+        studentTable.innerHTML =
+          '<tr><td colspan="8" class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading students...</td></tr>';
+
+        $.ajax({
+          url: "http://localhost:5000/api/students/getAllStudents",
+          type: "GET",
+          success: function (students) {
+            studentTable.innerHTML = "";
+
+            if (students.length === 0) {
+              studentTable.innerHTML =
+                '<tr><td colspan="8" class="text-center">No students found</td></tr>';
+            } else {
+              students.forEach((student) => {
+                const row = document.createElement("tr");
+                row.className = "fade-in";
+                row.innerHTML = `
                                 <td>${student.sid}</td>
                                 <td>${student.firstName}</td>
                                 <td>${student.lastName}</td>
                                 <td>${student.email}</td>
-                                <td>${student.nearestCity || 'N/A'}</td>
-                                <td>${student.course || 'N/A'}</td>
-                                <td>${student.guardian || 'N/A'}</td>
+                                <td>${student.nearestCity || "N/A"}</td>
+                                <td>${student.course || "N/A"}</td>
+                                <td>${student.guardian || "N/A"}</td>
                                 <td class="actions">
-                                    <button onclick="loadStudentForUpdate('${student.sid}')" class="btn btn-primary btn-sm">
+                                    <button onclick="loadStudentForUpdate('${
+                                      student.sid
+                                    }')" class="btn btn-primary btn-sm">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button onclick="confirmDelete('${student.sid}', '${student.firstName} ${student.lastName}')" class="btn btn-danger btn-sm">
+                                    <button onclick="confirmDelete('${
+                                      student.sid
+                                    }', '${student.firstName} ${
+                  student.lastName
+                }')" class="btn btn-danger btn-sm">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </td>
                             `;
-                            studentTable.appendChild(row);
-                        });
-                    }
-                },
-                error: function(xhr, status, error) {
-                    studentTable.innerHTML = '<tr><td colspan="8" class="text-center">Error loading students</td></tr>';
-                    console.error(error);
-                }
-            });
-        }
-
-        // Load student data for update
-        function loadStudentForUpdate(sid) {
-            loadContent('update');
-            
-            $.ajax({
-                url: `http://localhost:5000/api/students/findBySid/${sid}`,
-                type: 'GET',
-                success: function(student) {
-                    document.getElementById('update-sid').value = student.sid;
-                    document.getElementById('update-firstName').value = student.firstName;
-                    document.getElementById('update-lastName').value = student.lastName;
-                    document.getElementById('update-email').value = student.email;
-                    document.getElementById('update-nearestCity').value = student.nearestCity || '';
-                    document.getElementById('update-course').value = student.course || '';
-                    document.getElementById('update-guardian').value = student.guardian || '';
-                    
-                    // Scroll to form
-                    document.getElementById('update-sid').scrollIntoView({ behavior: 'smooth' });
-                },
-                error: function(xhr, status, error) {
-                    const alertDiv = document.createElement('div');
-                    alertDiv.className = 'alert alert-error';
-                    alertDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> Error loading student data: ${error}`;
-                    document.getElementById('updateBySidForm').prepend(alertDiv);
-                }
-            });
-        }
-
-        // Confirm before deleting a student
-        function confirmDelete(sid, name) {
-            if (confirm(`Are you sure you want to delete ${name} (SID: ${sid})? This action cannot be undone.`)) {
-                deleteStudent(sid);
+                studentTable.appendChild(row);
+              });
             }
-        }
-
-        // Delete student
-        function deleteStudent(sid) {
-            const messageElement = document.getElementById('delete-message') || document.createElement('div');
-            messageElement.id = 'delete-message';
-            messageElement.className = 'alert';
-            messageElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deleting student...';
-            
-            if (!document.getElementById('delete-message')) {
-                document.getElementById('deleteStudentForm').after(messageElement);
-            }
-            
-            $.ajax({
-                url: `http://localhost:5000/api/students/deleteStudent/${sid}`,
-                type: 'DELETE',
-                success: function(result) {
-                    if (result.message) {
-                        messageElement.className = 'alert alert-error';
-                        messageElement.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${result.message}`;
-                    } else {
-                        messageElement.className = 'alert alert-success';
-                        messageElement.innerHTML = `<i class="fas fa-check-circle"></i> Student deleted successfully`;
-                        updateDashboardStats();
-                        
-                        // If on all students page, refresh the list
-                        if (document.querySelector('.header h1').textContent === 'All Students') {
-                            setTimeout(() => {
-                                loadAllStudents();
-                            }, 1000);
-                        }
-                    }
-                    
-                    // Clear the message after 5 seconds
-                    setTimeout(() => {
-                        messageElement.remove();
-                    }, 5000);
-                },
-                error: function(xhr, status, error) {
-                    messageElement.className = 'alert alert-error';
-                    messageElement.innerHTML = `<i class="fas fa-exclamation-circle"></i> Error deleting student: ${error}`;
-                }
-            });
-        }
-
-        // Update Student Form
-        document.addEventListener('submit', function(e) {
-            if (e.target && e.target.id === 'updateBySidForm') {
-                e.preventDefault();
-                const formData = {
-                    sid: document.getElementById('update-sid').value,
-                    firstName: document.getElementById('update-firstName').value,
-                    lastName: document.getElementById('update-lastName').value,
-                    email: document.getElementById('update-email').value,
-                    nearestCity: document.getElementById('update-nearestCity').value,
-                    course: document.getElementById('update-course').value,
-                    guardian: document.getElementById('update-guardian').value,
-                };
-                
-                const alertDiv = document.createElement('div');
-                alertDiv.className = 'alert';
-                alertDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating student...';
-                document.getElementById('updateBySidForm').prepend(alertDiv);
-                
-                $.ajax({
-                    url: 'http://localhost:5000/api/students/updateBySid',
-                    type: 'PUT',
-                    contentType: 'application/json',
-                    data: JSON.stringify(formData),
-                    success: function(data) {
-                        alertDiv.className = 'alert alert-success';
-                        alertDiv.innerHTML = `<i class="fas fa-check-circle"></i> ${data.message}`;
-                        
-                        // Update dashboard stats
-                        updateDashboardStats();
-                        
-                        // Remove alert after 3 seconds
-                        setTimeout(() => {
-                            alertDiv.remove();
-                        }, 3000);
-                    },
-                    error: function(xhr, status, error) {
-                        const result = JSON.parse(xhr.responseText);
-                        alertDiv.className = 'alert alert-error';
-                        alertDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> Error: ${result.message}`;
-                    }
-                });
-            }
+          },
+          error: function (xhr, status, error) {
+            studentTable.innerHTML =
+              '<tr><td colspan="8" class="text-center">Error loading students</td></tr>';
+            console.error(error);
+          },
         });
+      }
 
-        // Delete Student Form
-        document.addEventListener('submit', function(e) {
-            if (e.target && e.target.id === 'deleteStudentForm') {
-                e.preventDefault();
-                const sid = document.getElementById('delete-sid').value;
-                
-                if (!sid) {
-                    const alertDiv = document.createElement('div');
-                    alertDiv.className = 'alert alert-error';
-                    alertDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please enter a SID.';
-                    document.getElementById('deleteStudentForm').prepend(alertDiv);
-                    
-                    setTimeout(() => {
-                        alertDiv.remove();
-                    }, 3000);
-                    return;
-                }
-                
-                confirmDelete(sid, `Student with SID ${sid}`);
-            }
+      // Load student data for update
+      function loadStudentForUpdate(sid) {
+        loadContent("update");
+
+        $.ajax({
+          url: `http://localhost:5000/api/students/findBySid/${sid}`,
+          type: "GET",
+          success: function (student) {
+            document.getElementById("update-sid").value = student.sid;
+            document.getElementById("update-firstName").value =
+              student.firstName;
+            document.getElementById("update-lastName").value = student.lastName;
+            document.getElementById("update-email").value = student.email;
+            document.getElementById("update-nearestCity").value =
+              student.nearestCity || "";
+            document.getElementById("update-course").value =
+              student.course || "";
+            document.getElementById("update-guardian").value =
+              student.guardian || "";
+
+            // Scroll to form
+            document
+              .getElementById("update-sid")
+              .scrollIntoView({ behavior: "smooth" });
+          },
+          error: function (xhr, status, error) {
+            const alertDiv = document.createElement("div");
+            alertDiv.className = "alert alert-error";
+            alertDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> Error loading student data: ${error}`;
+            document.getElementById("updateBySidForm").prepend(alertDiv);
+          },
         });
+      }
 
-        // Load recent activities
-        function loadRecentActivities() {
-            const activitiesList = document.getElementById('activities-list');
-            activitiesList.innerHTML = '<div class="activity-item"><div class="activity-icon"><i class="fas fa-spinner fa-spin"></i></div><div class="activity-details"><p>Loading activities...</p></div></div>';
-            
-            // In a real app, you would fetch this from your API
-            // For demo purposes, we'll use mock data
+      // Confirm before deleting a student
+      function confirmDelete(sid, name) {
+        if (
+          confirm(
+            `Are you sure you want to delete ${name} (SID: ${sid})? This action cannot be undone.`
+          )
+        ) {
+          deleteStudent(sid);
+        }
+      }
+
+      // Delete student
+      function deleteStudent(sid) {
+        const messageElement =
+          document.getElementById("delete-message") ||
+          document.createElement("div");
+        messageElement.id = "delete-message";
+        messageElement.className = "alert";
+        messageElement.innerHTML =
+          '<i class="fas fa-spinner fa-spin"></i> Deleting student...';
+
+        if (!document.getElementById("delete-message")) {
+          document.getElementById("deleteStudentForm").after(messageElement);
+        }
+
+        $.ajax({
+          url: `http://localhost:5000/api/students/deleteStudent/${sid}`,
+          type: "DELETE",
+          success: function (result) {
+            if (result.message) {
+              messageElement.className = "alert alert-error";
+              messageElement.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${result.message}`;
+            } else {
+              messageElement.className = "alert alert-success";
+              messageElement.innerHTML = `<i class="fas fa-check-circle"></i> Student deleted successfully`;
+              updateDashboardStats();
+
+              // If on all students page, refresh the list
+              if (
+                document.querySelector(".header h1").textContent ===
+                "All Students"
+              ) {
+                setTimeout(() => {
+                  loadAllStudents();
+                }, 1000);
+              }
+            }
+
+            // Clear the message after 5 seconds
             setTimeout(() => {
-                const mockActivities = [
-                    {
-                        type: 'add',
-                        message: 'Added new student <strong>Michael Brown</strong> (SID: 98765)',
-                        time: 'Just now'
-                    },
-                    {
-                        type: 'update',
-                        message: 'Updated record for <strong>Sarah Williams</strong> (SID: 12345)',
-                        time: '10 minutes ago'
-                    },
-                    {
-                        type: 'delete',
-                        message: 'Deleted student <strong>David Miller</strong> (SID: 54321)',
-                        time: '1 hour ago'
-                    },
-                    {
-                        type: 'add',
-                        message: 'Added new student <strong>Emily Davis</strong> (SID: 13579)',
-                        time: '2 hours ago'
-                    }
-                ];
-                
-                activitiesList.innerHTML = '';
-                
-                mockActivities.forEach(activity => {
-                    const activityItem = document.createElement('div');
-                    activityItem.className = 'activity-item fade-in';
-                    
-                    const activityIcon = document.createElement('div');
-                    activityIcon.className = `activity-icon ${activity.type}`;
-                    
-                    let iconClass = '';
-                    switch(activity.type) {
-                        case 'add': iconClass = 'fas fa-plus'; break;
-                        case 'update': iconClass = 'fas fa-edit'; break;
-                        case 'delete': iconClass = 'fas fa-trash'; break;
-                        default: iconClass = 'fas fa-info-circle';
-                    }
-                    
-                    activityIcon.innerHTML = `<i class="${iconClass}"></i>`;
-                    
-                    const activityDetails = document.createElement('div');
-                    activityDetails.className = 'activity-details';
-                    activityDetails.innerHTML = `
+              messageElement.remove();
+            }, 5000);
+          },
+          error: function (xhr, status, error) {
+            messageElement.className = "alert alert-error";
+            messageElement.innerHTML = `<i class="fas fa-exclamation-circle"></i> Error deleting student: ${error}`;
+          },
+        });
+      }
+
+      // Update Student Form
+      document.addEventListener("submit", function (e) {
+        if (e.target && e.target.id === "updateBySidForm") {
+          e.preventDefault();
+          const formData = {
+            sid: document.getElementById("update-sid").value,
+            firstName: document.getElementById("update-firstName").value,
+            lastName: document.getElementById("update-lastName").value,
+            email: document.getElementById("update-email").value,
+            nearestCity: document.getElementById("update-nearestCity").value,
+            course: document.getElementById("update-course").value,
+            guardian: document.getElementById("update-guardian").value,
+          };
+
+          const alertDiv = document.createElement("div");
+          alertDiv.className = "alert";
+          alertDiv.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Updating student...';
+          document.getElementById("updateBySidForm").prepend(alertDiv);
+
+          $.ajax({
+            url: "http://localhost:5000/api/students/updateBySid",
+            type: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify(formData),
+            success: function (data) {
+              alertDiv.className = "alert alert-success";
+              alertDiv.innerHTML = `<i class="fas fa-check-circle"></i> ${data.message}`;
+
+              // Update dashboard stats
+              updateDashboardStats();
+
+              // Remove alert after 3 seconds
+              setTimeout(() => {
+                alertDiv.remove();
+              }, 3000);
+            },
+            error: function (xhr, status, error) {
+              const result = JSON.parse(xhr.responseText);
+              alertDiv.className = "alert alert-error";
+              alertDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> Error: ${result.message}`;
+            },
+          });
+        }
+      });
+
+      // Delete Student Form
+      document.addEventListener("submit", function (e) {
+        if (e.target && e.target.id === "deleteStudentForm") {
+          e.preventDefault();
+          const sid = document.getElementById("delete-sid").value;
+
+          if (!sid) {
+            const alertDiv = document.createElement("div");
+            alertDiv.className = "alert alert-error";
+            alertDiv.innerHTML =
+              '<i class="fas fa-exclamation-circle"></i> Please enter a SID.';
+            document.getElementById("deleteStudentForm").prepend(alertDiv);
+
+            setTimeout(() => {
+              alertDiv.remove();
+            }, 3000);
+            return;
+          }
+
+          confirmDelete(sid, `Student with SID ${sid}`);
+        }
+      });
+
+      // Load recent activities
+      function loadRecentActivities() {
+        const activitiesList = document.getElementById("activities-list");
+        activitiesList.innerHTML =
+          '<div class="activity-item"><div class="activity-icon"><i class="fas fa-spinner fa-spin"></i></div><div class="activity-details"><p>Loading activities...</p></div></div>';
+
+        // In a real app, you would fetch this from your API
+        // For demo purposes, we'll use mock data
+        setTimeout(() => {
+          const mockActivities = [
+            {
+              type: "add",
+              message:
+                "Added new student <strong>Michael Brown</strong> (SID: 98765)",
+              time: "Just now",
+            },
+            {
+              type: "update",
+              message:
+                "Updated record for <strong>Sarah Williams</strong> (SID: 12345)",
+              time: "10 minutes ago",
+            },
+            {
+              type: "delete",
+              message:
+                "Deleted student <strong>David Miller</strong> (SID: 54321)",
+              time: "1 hour ago",
+            },
+            {
+              type: "add",
+              message:
+                "Added new student <strong>Emily Davis</strong> (SID: 13579)",
+              time: "2 hours ago",
+            },
+          ];
+
+          activitiesList.innerHTML = "";
+
+          mockActivities.forEach((activity) => {
+            const activityItem = document.createElement("div");
+            activityItem.className = "activity-item fade-in";
+
+            const activityIcon = document.createElement("div");
+            activityIcon.className = `activity-icon ${activity.type}`;
+
+            let iconClass = "";
+            switch (activity.type) {
+              case "add":
+                iconClass = "fas fa-plus";
+                break;
+              case "update":
+                iconClass = "fas fa-edit";
+                break;
+              case "delete":
+                iconClass = "fas fa-trash";
+                break;
+              default:
+                iconClass = "fas fa-info-circle";
+            }
+
+            activityIcon.innerHTML = `<i class="${iconClass}"></i>`;
+
+            const activityDetails = document.createElement("div");
+            activityDetails.className = "activity-details";
+            activityDetails.innerHTML = `
                         <p>${activity.message}</p>
                         <p class="activity-time">${activity.time}</p>
                     `;
-                    
-                    activityItem.appendChild(activityIcon);
-                    activityItem.appendChild(activityDetails);
-                    activitiesList.appendChild(activityItem);
-                });
-            }, 1000);
-        }
 
-        // Initialize the application
-        document.addEventListener('DOMContentLoaded', function() {
-            // Render the calendar
-            renderCalendar();
-            
-            // Load dashboard stats
-            updateDashboardStats();
-            
-            // Load recent activities
-            loadRecentActivities();
-            
-            // Close sidebar on mobile when clicking outside
-            document.addEventListener('click', function(e) {
-                const sidebar = document.querySelector('.sidebar');
-                if (window.innerWidth <= 992 && !e.target.closest('.sidebar') && !e.target.closest('.menu-toggle')) {
-                    sidebar.classList.remove('active');
-                }
-            });
-            
-            // Add animation to cards when they come into view
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('fade-in');
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            document.querySelectorAll('.card, .student-card').forEach(card => {
-                observer.observe(card);
-            });
+            activityItem.appendChild(activityIcon);
+            activityItem.appendChild(activityDetails);
+            activitiesList.appendChild(activityItem);
+          });
+        }, 1000);
+      }
+
+      // Initialize the application
+      document.addEventListener("DOMContentLoaded", function () {
+        // Render the calendar
+        renderCalendar();
+
+        // Load dashboard stats
+        updateDashboardStats();
+
+        // Load recent activities
+        loadRecentActivities();
+
+        // Close sidebar on mobile when clicking outside
+        document.addEventListener("click", function (e) {
+          const sidebar = document.querySelector(".sidebar");
+          if (
+            window.innerWidth <= 992 &&
+            !e.target.closest(".sidebar") &&
+            !e.target.closest(".menu-toggle")
+          ) {
+            sidebar.classList.remove("active");
+          }
         });
+
+        // Add animation to cards when they come into view
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("fade-in");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document.querySelectorAll(".card, .student-card").forEach((card) => {
+          observer.observe(card);
+        });
+      });
     </script>
-</body>
+  </body>
 </html>
