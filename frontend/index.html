@@ -50,7 +50,9 @@
         padding: 20px 0;
         height: 100vh;
         position: fixed;
-        transition: all 0.3s;
+        left: 0;
+        top: 0;
+        transition: transform 0.3s ease;
         z-index: 1000;
         display: flex;
         flex-direction: column;
@@ -112,6 +114,20 @@
         font-size: 1.1rem;
         width: 20px;
         text-align: center;
+      }
+      .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.4);
+        z-index: 999;
+        display: none;
+      }
+
+      .sidebar-overlay.active {
+        display: block;
       }
 
       /* Calendar Styles */
@@ -214,7 +230,6 @@
         padding: 25px;
         transition: all 0.3s;
       }
-
       .header {
         display: flex;
         justify-content: space-between;
@@ -457,15 +472,18 @@
       /* Responsive Styles */
       @media (max-width: 992px) {
         .sidebar {
-          width: 0;
-          overflow: hidden;
+          transform: translateX(-100%);
+          width: var(--sidebar-width); /* keep width */
         }
+
         .sidebar.active {
-          width: var(--sidebar-width);
+          transform: translateX(0);
         }
+
         .main-content {
           margin-left: 0;
         }
+
         .menu-toggle {
           display: block;
         }
@@ -634,6 +652,7 @@
     </style>
   </head>
   <body>
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
     <!-- Sidebar -->
     <div class="sidebar">
       <div class="sidebar-header">
@@ -1186,6 +1205,7 @@
       // Toggle sidebar on mobile
       function toggleSidebar() {
         document.querySelector(".sidebar").classList.toggle("active");
+        document.querySelector(".sidebar-overlay").classList.toggle("active");
       }
 
       // Load content dynamically
@@ -1215,6 +1235,11 @@
           loadAllStudents();
         } else if (page === "dashboard") {
           updateDashboardStats();
+        }
+
+        if (window.innerWidth <= 992) {
+          document.querySelector(".sidebar").classList.remove("active");
+          document.querySelector(".sidebar-overlay").classList.remove("active");
         }
       }
 
@@ -1636,25 +1661,25 @@
             {
               type: "add",
               message:
-                "Added new student <strong>Michael Brown</strong> (SID: 98765)",
+                "Added new student <strong>Kethaka Senanayaka</strong> (SID: 98765)",
               time: "Just now",
             },
             {
               type: "update",
               message:
-                "Updated record for <strong>Sarah Williams</strong> (SID: 12345)",
+                "Updated record for <strong>Kethaka Senanayaka</strong> (SID: 12345)",
               time: "10 minutes ago",
             },
             {
               type: "delete",
               message:
-                "Deleted student <strong>David Miller</strong> (SID: 54321)",
+                "Deleted student <strong>Kethaka Senanayaka</strong> (SID: 54321)",
               time: "1 hour ago",
             },
             {
               type: "add",
               message:
-                "Added new student <strong>Emily Davis</strong> (SID: 13579)",
+                "Added new student <strong>Kethaka Senanayaka</strong> (SID: 13579)",
               time: "2 hours ago",
             },
           ];
