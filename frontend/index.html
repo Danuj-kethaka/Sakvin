@@ -64,10 +64,6 @@
         text-align: center;
       }
 
-      body.sidebar-open {
-        overflow: hidden;
-      }
-
       .sidebar-header h3 {
         color: white;
         font-size: 1.5rem;
@@ -666,32 +662,32 @@
 
       <ul class="sidebar-menu">
         <li>
-          <a href="#" class="active" onclick="loadContent('dashboard', this)"></a>
-          <i class="fas fa-tachometer-alt"></i> Dashboard</a
+          <a href="#" class="active" onclick="loadContent('dashboard')"
+            ><i class="fas fa-tachometer-alt"></i> Dashboard</a
           >
         </li>
         <li>
-          <a href="#" class="active" onclick="loadContent('insert',this)"></a>
-            <i class="fas fa-user-plus"></i> Insert Student</a
+          <a href="#" onclick="loadContent('insert')"
+            ><i class="fas fa-user-plus"></i> Insert Student</a
           >
         </li>
         <li>
-          <a href="#"  class="active" onclick="loadContent('search',this)"></a>
-          <i class="fas fa-search"></i> Find Student</a
+          <a href="#" onclick="loadContent('search')"
+            ><i class="fas fa-search"></i> Find Student</a
           >
         </li>
         <li>
-          <a href="#"  class="active" onclick="loadContent('all',this)"></a>
+          <a href="#" onclick="loadContent('all')"
             ><i class="fas fa-users"></i> All Students</a
           >
         </li>
         <li>
-          <a href="#"  class="active" onclick="loadContent('update',this)"></a>
+          <a href="#" onclick="loadContent('update')"
             ><i class="fas fa-edit"></i> Update Student</a
           >
         </li>
         <li>
-          <a href="#"  class="active" onclick="loadContent('delete')"></a>
+          <a href="#" onclick="loadContent('delete')"
             ><i class="fas fa-user-minus"></i> Delete Student</a
           >
         </li>
@@ -1208,18 +1204,12 @@
 
       // Toggle sidebar on mobile
       function toggleSidebar() {
-        const sidebar = document.querySelector(".sidebar");
-        const overlay = document.querySelector(".sidebar-overlay");
-
-        sidebar.classList.toggle("active");
-        overlay.classList.toggle("active");
-
-        // prevent body scroll when open
-        document.body.classList.toggle("sidebar-open");
+        document.querySelector(".sidebar").classList.toggle("active");
+        document.querySelector(".sidebar-overlay").classList.toggle("active");
       }
 
       // Load content dynamically
-      function loadContent(page, element) {
+      function loadContent(page) {
         const contentArea = document.getElementById("content-area");
         const template = document.getElementById(`${page}-template`);
 
